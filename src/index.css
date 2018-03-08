@@ -17,8 +17,9 @@ html {
     width: 100%;
     background: #003863;
     font-family: 'Rubik', sans-serif;
+    font-color: white;
 }
-
+/*
 .App {
     display: flex;
     flex-direction: column;
@@ -137,4 +138,4 @@ html {
 
 .form-question label {
     padding: 0;
-}
+} */

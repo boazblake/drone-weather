@@ -5,11 +5,11 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.3",
     "clean-webpack-plugin": "^0.1.18",
     "css-loader": "^0.28.10",
     "file-loader": "^1.1.10",
@@ -21,10 +21,19 @@
   },
   "dependencies": {
     "auth0-js": "^9.3.1",
-    "mithril": "^1.1.6"
+    "bulma": "^0.7.2",
+    "data.task": "^3.1.2",
+    "marked": "^0.5.1",
+    "microstates": "^0.12.0",
+    "mithril": "^1.1.6",
+    "mithril-stream": "^1.1.0",
+    "patchinko": "^4.1.0",
+    "ramda": "^0.25.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "yarn db & yarn web",
+    "db": "json-server --watch src/services/presentationsDB.json",
+    "web": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js"
   }
 }
