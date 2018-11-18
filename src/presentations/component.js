@@ -1,6 +1,5 @@
 import { log } from '../services/index.js'
 import m from 'mithril'
-import O from 'patchinko/constant'
 import { clone } from 'ramda'
 import {
   animateEntrance,
@@ -23,31 +22,30 @@ const Presentations = ({ attrs: { Models } }) => {
             presentationModel: clone(Models.PresentationModel),
           })
         : '',
-      m('section.section columns is-multiline', [
-        m(
-          '.column is-6',
-          {
-            class: 'presentation',
-            oncreate: ({ dom }) => animateFadeIn({ dom }),
-            onBeforeRemove: (vnode, done) => {
-              vnode.dom.addEventListener('animationend', done)
-              vnode.dom.style.animation = 'fadeOut 1s'
-            },
-            style: { overflow: 'scroll', height: '65vh' },
+
+      m(
+        'section.section column is-6',
+        {
+          class: 'presentation',
+          oncreate: ({ dom }) => animateFadeIn({ dom }),
+          onBeforeRemove: (vnode, done) => {
+            vnode.dom.addEventListener('animationend', done)
+            vnode.dom.style.animation = 'fadeOut 1s'
           },
-          [
-            Models.Presentations &&
-              Models.Presentations.map(({ title, id }) =>
-                m(Presentation, {
-                  key: id,
-                  id,
-                  title,
-                  Models,
-                })
-              ),
-          ]
-        ),
-      ]),
+          style: { overflow: 'scroll', height: '65vh' },
+        },
+        [
+          Models.Presentations &&
+            Models.Presentations.map(({ title, id }) =>
+              m(Presentation, {
+                key: id,
+                id,
+                title,
+                Models,
+              })
+            ),
+        ]
+      ),
     ],
   }
 }

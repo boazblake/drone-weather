@@ -8,7 +8,9 @@ import {
   animateFadeOut,
 } from '../../services/animations.js'
 
-const Slide = ({ attrs: { getSlides, Models, s } }) => {
+import '../style.css'
+
+const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
   const onSuccess = _ => {
     console.log('success', Models)
@@ -29,6 +31,19 @@ const Slide = ({ attrs: { getSlides, Models, s } }) => {
     updateSlideTask(id)(s).fork(onError('updating'), onSuccess)
   }
 
+  const handleDragStart = ev => {
+    ev.target.style.opacity = '0.4'
+    state.dragId = s.id
+    state.dragging = true
+    ev.dataTransfer.effectAllowed = 'move'
+  }
+
+  const handleDragEnd = ev => {
+    ev.target.style.opacity = '1'
+    state.dragging = false
+    state.dragId = ''
+  }
+
   return {
     oncreate: ({ dom }) => animateFadeIn({ dom }),
     onBeforeRemove: ({ dom }) => animateFadeOut({ dom }),
@@ -36,6 +51,10 @@ const Slide = ({ attrs: { getSlides, Models, s } }) => {
       m(
         'section.level box',
         {
+          id: s.id,
+          draggable: true,
+          ondragstart: handleDragStart,
+          ondragend: handleDragEnd,
           style: {
             'background-color': s.isSelected ? '#3498db' : '#95a5a6',
           },

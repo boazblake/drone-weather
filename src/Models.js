@@ -1,6 +1,5 @@
 import m from 'mithril'
 import Stream from 'mithril-stream'
-import O from 'patchinko/constant'
 import { filter } from 'ramda'
 
 const User = {

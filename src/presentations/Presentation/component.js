@@ -11,7 +11,7 @@ const Presentation = ({ attrs: { title, id, model } }) => {
   const onSuccess = _ => findPresentations({ attrs: { model } })
 
   const authDeleteTask = id =>
-    alert('Are you sure you want to delete? ') ? Task.of(id) : Task.rejected(id)
+    alert('Are you sure you want to delete?') ? Task.of(id) : Task.rejected(id)
 
   const removePresTask = pId =>
     authDeleteTask(pId)
