@@ -26,7 +26,16 @@ const Slides = ({ attrs: { Models } }) => {
 
   const onSuccess = presentation => {
     Models.CurrentPresentation = merge(Models.CurrentPresentation, presentation)
-    state.left = Models.CurrentPresentation.slides
+
+    //Assign using Streams? L and R depending on IsSelected status
+    state.left = filter(
+      propEq('isSelected', false),
+      Models.CurrentPresentation.slides
+    )
+    state.right = filter(
+      propEq('isSelected', true),
+      Models.CurrentPresentation.slides
+    )
   }
   const getSlides = ({ attrs: { Models } }) => {
     Models.CurrentPresentation.id = m.route.param('id')
@@ -40,8 +49,8 @@ const Slides = ({ attrs: { Models } }) => {
     ev.preventDefault()
     ev.dataTransfer.dropEffect = 'move'
     state.dragging = true
-    let id = state.dragId
     let item = filter(propEq('id', state.dragId), state.left)
+    item.isSelected = true
     state.left = without(item, state.left)
     state.right = concat(state.right, item)
   }

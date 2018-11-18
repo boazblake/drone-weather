@@ -7,27 +7,18 @@ import {
   animateFadeIn,
   animateFadeOut,
 } from '../../services/animations.js'
+import { updateSlideTask } from '../../services/requests.js'
 import marked from 'marked'
 
 import './style.css'
 
 const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
-  const onSuccess = _ => {
-    console.log('success', Models)
-    console.log('s', s)
-    getSlides({ attrs: { Models } })
-  }
+  const onSuccess = _ => getSlides({ attrs: { Models } })
 
-  const authDeleteTask = id =>
-    alert('Are you sure you want to delete?') ? Task.of(id) : Task.rejected(id)
-
-  const removeSlideTask = id =>
-    authDeleteTask(id).fork(onError('deleting'), onSuccess)
-
-  const selectSlide = id => {
-    s.isSelected = !s.isSelected
-    updateSlideTask(id)(s).fork(onError('updating'), onSuccess)
+  const removeSlideTask = s => {
+    s.isSelected = false
+    updateSlideTask(s.id)(s).fork(onError('updating'), onSuccess)
   }
 
   return {
@@ -51,7 +42,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
           m('article.article', { style: { position: 'relative', top: 0 } }, [
             m('button.delete-preview', {
               style: { 'background-color': '#e74c3c' },
-              onclick: () => removeSlideTask(s.id),
+              onclick: () => removeSlideTask(s),
             }),
           ]),
           m('article.article', { style: { position: 'relative', top: 0 } }, [

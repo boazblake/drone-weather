@@ -12,11 +12,7 @@ import '../style.css'
 
 const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
-  const onSuccess = _ => {
-    console.log('success', Models)
-    console.log('s', s)
-    getSlides({ attrs: { Models } })
-  }
+  const onSuccess = _ => getSlides({ attrs: { Models } })
 
   const authDeleteTask = id =>
     alert('Are you sure you want to delete?') ? Task.of(id) : Task.rejected(id)
@@ -26,10 +22,8 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
       .chain(deleteSlideTask)
       .fork(onError('deleting'), onSuccess)
 
-  const selectSlide = id => {
-    s.isSelected = !s.isSelected
+  const selectSlide = id =>
     updateSlideTask(id)(s).fork(onError('updating'), onSuccess)
-  }
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
@@ -42,6 +36,8 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
     ev.target.style.opacity = '1'
     state.dragging = false
     state.dragId = ''
+    s.isSelected = true
+    selectSlide(s.id)
   }
 
   return {
