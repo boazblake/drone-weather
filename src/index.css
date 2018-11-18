@@ -1,23 +1,27 @@
 /* index.css */
 
-@import url('https://fonts.googleapis.com/css?family=Rubik');
+@import url("https://fonts.googleapis.com/css?family=Rubik");
+
+* {
+  box-sizing: border-box;
+}
 
 body,
 html {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 #app {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    background: #003863;
-    font-family: 'Rubik', sans-serif;
-    font-color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #003863;
+  font-family: "Rubik", sans-serif;
+  font-color: white;
 }
 /*
 .App {

@@ -2,16 +2,17 @@ import m from 'mithril'
 import { contains, filter, propEq } from 'ramda'
 import { log } from '../services/index.js'
 
-const toggleModal = model => [
-  m(
-    'a.navbar-item',
-    {
-      onclick: () => (model.toggleModal = !model.toggleModal),
-    },
-    'Add New'
-  ),
-]
-
+const toggleModal = model => {
+  return [
+    m(
+      'a.navbar-item',
+      {
+        onclick: () => (model.toggleModal = !model.toggleModal),
+      },
+      'Add New'
+    ),
+  ]
+}
 const toPresentations = [
   m(
     'a.navbar-item',
@@ -86,18 +87,18 @@ const actionView = model => page => {
   }
 }
 
-const Toolbar = ({ attrs: { model } }) => {
-  console.log('p in toolbar', model().Models.CurrentPresentation.title)
+const Toolbar = ({ attrs: { Models } }) => {
+  console.log('pres in toolbar', Models.CurrentPresentation)
   const currentPage = m.route.get().split('/')[1]
   return {
     view: () =>
       m(
-        'nav.navbar',
+        'nav.navbar is-white',
         m('.navbar-menu is-active', [
           // m('.level', [
           [
-            m('.navbar-start', [navView(model().Models)(currentPage)]),
-            m('.navbar-end', [actionView(model().Models)(currentPage)]),
+            m('.navbar-start', [navView(Models)(currentPage)]),
+            m('.navbar-end', [actionView(Models)(currentPage)]),
           ],
           // ]),
         ])

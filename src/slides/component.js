@@ -1,10 +1,17 @@
 import m from 'mithril'
 import O from 'patchinko/constant'
 import { clone, merge } from 'ramda'
-import { animateEntrance, animateExit } from '../services/animations.js'
+import {
+  animateEntrance,
+  animateExit,
+  animateFadeOut,
+  animateFadeIn,
+} from '../services/animations.js'
 import SlidesModal from './slidesModal.js'
 import Slide from './Slide/component.js'
 import { loadSlides } from './model.js'
+
+import './style.css'
 
 const Slides = ({ attrs: { Models } }) => {
   const onError = error => console.log('error', error)
@@ -24,27 +31,37 @@ const Slides = ({ attrs: { Models } }) => {
   }
 
   return {
-    oncreate: getSlides,
-    view: ({ attrs: { Models } }) =>
-      m('.article', [
-        Models.toggleModal
-          ? m(SlidesModal, {
-              toggleModal: () => (Models.toggleModal = !Models.toggleModal),
-              slides: Models.CurrentPresentation.slides,
-              slide: clone(Models.SlideModel),
-              pId: Models.CurrentPresentation.id,
-            })
-          : '',
-
-        m('section.section columns is-multiline', [
+    oninit: getSlides,
+    view: ({ attrs: { Models } }) => [
+      Models.toggleModal
+        ? m(SlidesModal, {
+            toggleModal: () => (Models.toggleModal = !Models.toggleModal),
+            slides: Models.CurrentPresentation.slides,
+            slide: clone(Models.SlideModel),
+            pId: Models.CurrentPresentation.id,
+          })
+        : '',
+      m(
+        'section.section columns is-multiline',
+        {
+          oncreate: ({ dom }) => animateFadeIn({ dom }),
+          onBeforeRemove: (vnode, done) => {
+            vnode.dom.addEventListener('animationend', done)
+            vnode.dom.style.animation = 'fadeOut 1s'
+          },
+          style: { overflow: 'scroll', height: '65vh' },
+        },
+        [
           m(
-            '.column is-6 is-multiline',
-            { style: { overflow: 'scroll', height: '65vh' } },
+            '.column is-6',
+            {
+              oncreate: ({ dom }) => animateFadeIn({ dom }),
+              onBeforeRemove: ({ dom }) => animateFadeOut({ dom }),
+              style: { overflow: 'scroll', height: '65vh' },
+            },
             [
               Models.CurrentPresentation.slides.map(s =>
                 m(Slide, {
-                  oncreate: ({ dom }) => animateEntrance(dom),
-                  onbeforeremove: ({ dom }) => animateExit(dom),
                   key: s.id,
                   Models,
                   getSlides,
@@ -53,8 +70,9 @@ const Slides = ({ attrs: { Models } }) => {
               ),
             ]
           ),
-        ]),
-      ]),
+        ]
+      ),
+    ],
   }
 }
 

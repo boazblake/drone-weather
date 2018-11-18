@@ -9,10 +9,28 @@
   letter-spacing: 2px;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
 
+  100% {
+    opacity: 1;
+  }
+}
 
-.fadeIn {animation:fade-in 0.5s;}
-@keyframes fade-in {
-    from {opacity:0;}
-    to {opacity:1;}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.presentation {
+  transition: "ease-in-out";
+  animation: fadeIn 2s;
+  overflow: hidden;
 }

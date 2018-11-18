@@ -23,6 +23,7 @@ const PresentationModel = {
 }
 
 const Presentations = []
+
 const CurrentPresentation = {
   title: '',
   id: '',

@@ -8,3 +8,12 @@
   font-size: 200%;
   letter-spacing: 2px;
 }
+
+.delete {
+  top: -26px;
+  right: -18px;
+  border-bottom-left-radius: 34px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}

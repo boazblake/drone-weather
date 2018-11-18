@@ -1,13 +1,22 @@
 import m from 'mithril'
 import { log } from '../../services/index.js'
-import { deletePresentationsTask } from '../../services/requests.js'
+import {
+  deletePresentationsTask,
+  findPresentationsTask,
+} from '../../services/requests.js'
+import Task from 'data.task'
 
-const Presentation = ({ attrs: { title, id, findPresentations, model } }) => {
+const Presentation = ({ attrs: { title, id, model } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
   const onSuccess = _ => findPresentations({ attrs: { model } })
 
+  const authDeleteTask = id =>
+    alert('Are you sure you want to delete? ') ? Task.of(id) : Task.rejected(id)
+
   const removePresTask = pId =>
-    deletePresentationsTask(pId).fork(onError('deleting'), onSuccess)
+    authDeleteTask(pId)
+      .chain(deletePresentationsTask)
+      .fork(onError('deleting'), onSuccess)
 
   return {
     view: () =>

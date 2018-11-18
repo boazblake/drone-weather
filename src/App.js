@@ -6,27 +6,43 @@ import Slides from './slides/component.js'
 import Editor from './editor/component.js'
 import Layout from './layout/component.js'
 import SlideShow from './slideshow/component.js'
+import { getPresentationsTask } from './presentations/model.js'
 
-const makeRoutes = model => {
-  let modelCopy = Stream(model)
+const makeRoutes = mdl => {
+  let model = Stream(mdl)
   return {
     '/presentations': {
-      view: () => m(Layout, { model: modelCopy }, m(Presentations, model)),
+      view: () => m(Layout, model(), m(Presentations, model())),
     },
     '/presentation/:id/slides': {
-      view: () => m(Layout, { model: modelCopy }, m(Slides, model)),
+      view: () => m(Layout, model(), m(Slides, model())),
     },
     '/edit/slide/:id': {
-      view: () => m(Layout, { model: modelCopy }, m(Editor, model)),
+      view: () => m(Layout, model(), m(Editor, model())),
     },
     '/slideshow/:id': {
-      view: () => m(Layout, { model: modelCopy }, m(SlideShow, model)),
+      view: () => m(Layout, model(), m(SlideShow, model())),
     },
   }
 }
 
 export const App = ({ attrs: model }) => {
+  const state = {
+    errors: '',
+  }
+
+  const onError = error => {
+    log('error')(error)
+    state.error = error
+  }
+
+  const onSuccess = Models => dto => (Models.Presentations = dto)
+
+  const findPresentations = ({ attrs: { Models } }) =>
+    getPresentationsTask().fork(onError, onSuccess(Models))
+
   return {
+    oninit: findPresentations,
     oncreate: vnode => {
       const mainStage = vnode.dom.querySelector('.main-stage')
 
