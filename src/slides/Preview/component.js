@@ -29,7 +29,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
         'section. box',
         {
           style: {
-            'border-color': s.isSelected ? '#3498db' : '#95a5a6',
+            'border-color': state.dragging ? '#3498db' : '#95a5a6',
             overflow: 'hidden',
             height: '60vh',
             display: 'inline-block',

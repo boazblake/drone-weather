@@ -92,6 +92,7 @@ const Slides = ({ attrs: { Models } }) => {
             style: {
               overflow: 'scroll',
               height: '80vh',
+              width: '25%',
               display: 'inline-block',
             },
           },
@@ -121,7 +122,7 @@ const Slides = ({ attrs: { Models } }) => {
               overflow: 'scroll',
               height: '80vh',
               display: 'inline-block',
-              width: '60%',
+              width: '70%',
               'padding-top': 0,
               'padding-right': 0,
               'margin-left': '5%',

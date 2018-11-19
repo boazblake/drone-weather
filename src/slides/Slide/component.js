@@ -37,6 +37,8 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
     if (state.droppable) {
       s.isSelected = true
       selectSlide(s.id)
+      state.dragging = false
+      state.droppable = false
     }
   }
 
@@ -58,22 +60,17 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
         [
           m('div.level-left', [
             m(
-              'button.button',
-              {
-                onclick: () => selectSlide(s.id),
-              },
-              s.title
-            ),
-          ]),
-          m('div.level-right', [
-            m(
-              `a.button`,
+              'a.button',
               {
                 onclick: () => m.route.set(`/edit/slide/${s.id}`),
               },
-              [m('span.icon is-small', [m('i.fas fa-edit')])]
+              [
+                m('span', s.title),
+                m('span.icon is-small', [m('i.fas fa-edit')]),
+              ]
             ),
-
+          ]),
+          m('div.level-right', [
             m('button.delete', {
               style: { 'background-color': '#e74c3c' },
               onclick: () => removeSlideTask(s.id),
