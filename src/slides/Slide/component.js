@@ -36,9 +36,11 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
     ev.target.style.opacity = '1'
     if (state.droppable) {
       s.isSelected = true
-      selectSlide(s.id)
+      s.order = state.right.length
       state.dragging = false
       state.droppable = false
+      console.log('end', s.order, state.right.length)
+      return selectSlide(s.id)
     }
   }
 

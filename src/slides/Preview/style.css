@@ -1,34 +1,19 @@
-.delete-preview {
-  border: none;
-  border-radius: 290486px;
+.remove-preview {
+  float: left;
   cursor: pointer;
-  pointer-events: auto;
-  display: inline-block;
-  flex-grow: 0;
-  flex-shrink: 0;
-  font-size: 0;
-  height: 20px;
-  max-height: 20px;
-  max-width: 20px;
-  min-height: 20px;
-  min-width: 20px;
   outline: none;
   position: relative;
   vertical-align: top;
-  width: 20px;
+  width: 100%;
   top: -18px;
-  right: -158px;
-  border-bottom-left-radius: 34px;
+  background-color: #34495e;
+  border-bottom-left-radius: 24px;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
   opacity: 0;
 }
 
-article:hover > .delete-preview {
-  border-bottom-left-radius: 34px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
+article:hover > .remove-preview {
   opacity: 1;
 }

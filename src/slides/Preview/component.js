@@ -18,6 +18,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
   const removeSlideTask = s => {
     s.isSelected = false
+    s.order = 0
     updateSlideTask(s.id)(s).fork(onError('updating'), onSuccess)
   }
 
@@ -29,7 +30,6 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
         'section. box',
         {
           style: {
-            'border-color': state.dragging ? '#3498db' : '#95a5a6',
             overflow: 'hidden',
             height: '60vh',
             display: 'inline-block',
@@ -43,22 +43,53 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
             'article.article',
             {
               onBeforeRemove: ({ dom }) => animateExit({ dom }),
-              style: { position: 'relative', top: 0 },
+              style: { position: 'relative', top: 0, 'z-index': 1 },
             },
             [
               m(
-                'button.delete delete-preview',
+                'a.button remove-preview',
                 {
-                  style: { 'background-color': '#e74c3c' },
+                  'z-index': 1,
                   onclick: () => removeSlideTask(s),
                 },
-                m('i.far fa-calendar-times')
+                [
+                  m('span.icon is-small', [
+                    m('i.fas fa-sign-out-alt', {
+                      style: {
+                        color: 'white',
+                        transform: 'rotate(180deg)',
+                      },
+                    }),
+                  ]),
+                ]
               ),
             ]
           ),
-          m('article.article', { style: { position: 'relative', top: 0 } }, [
-            m.trust(marked(s.contents)),
-          ]),
+          [
+            m('span.icon is-small', [
+              m('span.fa-stack ', [
+                m(
+                  'span.fa-stack-1',
+                  {
+                    style: {
+                      position: 'relative',
+                      'margin-left': '75px',
+                      top: '-50px',
+                      color: '#e67e22',
+                      'font-size': '6rem',
+                      'z-index': 1,
+                    },
+                  },
+                  s.order
+                ),
+              ]),
+            ]),
+          ],
+          m(
+            'article.article',
+            { style: { position: 'relative', top: '-155px', 'z-index': 0 } },
+            [m.trust(marked(s.contents))]
+          ),
         ]
       ),
   }

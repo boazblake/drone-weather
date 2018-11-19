@@ -28,7 +28,6 @@ const Slides = ({ attrs: { Models } }) => {
   const onSuccess = presentation => {
     Models.CurrentPresentation = merge(Models.CurrentPresentation, presentation)
 
-    //Assign using Streams? L and R depending on IsSelected status
     state.left = filter(
       propEq('isSelected', false),
       Models.CurrentPresentation.slides
@@ -58,6 +57,8 @@ const Slides = ({ attrs: { Models } }) => {
     if (state.dragging) {
       state.droppable = true
       let item = filter(propEq('id', state.dragId), state.left)
+      item.map(i => (i.order = state.right.length + 1))
+      console.log('item', item, state.right.length + 1)
       state.left = without(item, state.left)
       state.right = concat(state.right, item)
     }
@@ -118,7 +119,7 @@ const Slides = ({ attrs: { Models } }) => {
               vnode.dom.style.animation = 'fadeOut 1s'
             },
             style: {
-              border: state.dragging ? '1px dashed' : '',
+              border: state.dragging ? '1px dashed white' : '',
               overflow: 'scroll',
               height: '80vh',
               display: 'inline-block',
