@@ -27,17 +27,17 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
-    state.dragId = s.id
     state.dragging = true
+    state.dragId = s.id
     ev.dataTransfer.effectAllowed = 'move'
   }
 
   const handleDragEnd = ev => {
     ev.target.style.opacity = '1'
-    state.dragging = false
-    state.dragId = ''
-    s.isSelected = true
-    selectSlide(s.id)
+    if (state.droppable) {
+      s.isSelected = true
+      selectSlide(s.id)
+    }
   }
 
   return {

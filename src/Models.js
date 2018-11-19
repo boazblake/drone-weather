@@ -2,17 +2,12 @@ import m from 'mithril'
 import Stream from 'mithril-stream'
 import { filter } from 'ramda'
 
-const User = {
-  name: '',
-  password: '',
-  Token: '',
-}
-
 const SlideModel = {
   title: '',
   contents: '',
   id: '',
   isSelected: false,
+  order: 0,
   presentationId: '',
 }
 
@@ -21,14 +16,14 @@ const PresentationModel = {
   title: '',
 }
 
-const Presentations = []
-
 const CurrentPresentation = {
   title: '',
   id: '',
   slides: [],
   slideShow: [],
 }
+
+const Presentations = []
 
 const Models = {
   Presentations,

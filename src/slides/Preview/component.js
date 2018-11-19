@@ -23,7 +23,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
   return {
     oncreate: ({ dom }) => animateFadeIn({ dom }),
-    onBeforeRemove: ({ dom }) => animateFadeOut({ dom }),
+    onBeforeRemove: ({ dom }) => animateExit({ dom }),
     view: () =>
       m(
         'section. box',
@@ -39,12 +39,23 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
           },
         },
         [
-          m('article.article', { style: { position: 'relative', top: 0 } }, [
-            m('button.delete-preview', {
-              style: { 'background-color': '#e74c3c' },
-              onclick: () => removeSlideTask(s),
-            }),
-          ]),
+          m(
+            'article.article',
+            {
+              onBeforeRemove: ({ dom }) => animateExit({ dom }),
+              style: { position: 'relative', top: 0 },
+            },
+            [
+              m(
+                'button.delete delete-preview',
+                {
+                  style: { 'background-color': '#e74c3c' },
+                  onclick: () => removeSlideTask(s),
+                },
+                m('i.far fa-calendar-times')
+              ),
+            ]
+          ),
           m('article.article', { style: { position: 'relative', top: 0 } }, [
             m.trust(marked(s.contents)),
           ]),

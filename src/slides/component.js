@@ -20,6 +20,7 @@ const Slides = ({ attrs: { Models } }) => {
     right: [],
     dragId: '',
     dragging: false,
+    droppable: false,
   }
 
   const onError = error => console.log('error', error)
@@ -37,6 +38,7 @@ const Slides = ({ attrs: { Models } }) => {
       Models.CurrentPresentation.slides
     )
   }
+
   const getSlides = ({ attrs: { Models } }) => {
     Models.CurrentPresentation.id = m.route.param('id')
     return loadSlides(Models.CurrentPresentation.id)(Models).fork(
@@ -47,12 +49,24 @@ const Slides = ({ attrs: { Models } }) => {
 
   const handleDragLeave = ev => {
     ev.preventDefault()
-    ev.dataTransfer.dropEffect = 'move'
+    state.dragging = false
+    state.droppable = false
+  }
+
+  const handleDrop = ev => {
+    ev.preventDefault()
+    if (state.dragging) {
+      state.droppable = true
+      let item = filter(propEq('id', state.dragId), state.left)
+      state.left = without(item, state.left)
+      state.right = concat(state.right, item)
+    }
+  }
+
+  const handleDragOver = ev => {
+    ev.preventDefault()
     state.dragging = true
-    let item = filter(propEq('id', state.dragId), state.left)
-    item.isSelected = true
-    state.left = without(item, state.left)
-    state.right = concat(state.right, item)
+    ev.dataTransfer.dropEffect = 'move'
   }
 
   return {
@@ -103,6 +117,7 @@ const Slides = ({ attrs: { Models } }) => {
               vnode.dom.style.animation = 'fadeOut 1s'
             },
             style: {
+              border: state.dragging ? '1px dashed' : '',
               overflow: 'scroll',
               height: '80vh',
               display: 'inline-block',
@@ -112,6 +127,8 @@ const Slides = ({ attrs: { Models } }) => {
               'margin-left': '5%',
             },
             ondragleave: handleDragLeave,
+            ondrop: handleDrop,
+            ondragover: handleDragOver,
           },
           [
             state.right.map(s =>

@@ -22,5 +22,13 @@
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
-  content: "X";
+  opacity: 0;
+}
+
+article:hover > .delete-preview {
+  border-bottom-left-radius: 34px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+  opacity: 1;
 }
