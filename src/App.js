@@ -7,6 +7,7 @@ import Editor from './editor/component.js'
 import Layout from './layout/component.js'
 import SlideShow from './slideshow/component.js'
 import { getPresentationsTask } from './presentations/model.js'
+import { log } from './services/index.js'
 
 const makeRoutes = mdl => {
   let model = Stream(mdl)

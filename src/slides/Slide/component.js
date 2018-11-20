@@ -7,7 +7,7 @@ import {
   animateFadeIn,
   animateFadeOut,
 } from '../../services/animations.js'
-
+import { take } from 'ramda'
 import '../style.css'
 
 const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
@@ -27,19 +27,19 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
-    state.dragging = true
-    state.dragId = s.id
+    state.slideDrag.dragging = true
+    state.slideDrag.dragId = s.id
     ev.dataTransfer.effectAllowed = 'move'
+    ev.dataTransfer.setData('text/plain', 'slide')
   }
 
   const handleDragEnd = ev => {
     ev.target.style.opacity = '1'
-    if (state.droppable) {
-      s.isSelected = true
+    if (state.slideDrag.droppable) {
       s.order = state.right.length
-      state.dragging = false
-      state.droppable = false
-      console.log('end', s.order, state.right.length)
+      s.isSelected = true
+      state.slideDrag.dragging = false
+      state.slideDrag.droppable = false
       return selectSlide(s.id)
     }
   }
@@ -67,7 +67,7 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
                 onclick: () => m.route.set(`/edit/slide/${s.id}`),
               },
               [
-                m('span', s.title),
+                m('span', take(15, s.title)),
                 m('span.icon is-small', [m('i.fas fa-edit')]),
               ]
             ),
