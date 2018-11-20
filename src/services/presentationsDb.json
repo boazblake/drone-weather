@@ -23,8 +23,8 @@
       "id": 1,
       "title": "takeaways",
       "contents": "# TAKEAWAYs\n## overall I ![elm-app-heart](https://marcosh.github.io/presentations/2016/10/28/img/elm_heart.png), \n## aside\nhow to start with fp is diff from OO ... need to first think about what you want to create and build the model up first. \n\n# some of the many challanges ...\n1. saving to db\n2. managing state",
-      "isSelected": false,
-      "order": 0
+      "isSelected": true,
+      "order": 3
     },
     {
       "presentationId": 2,
@@ -71,39 +71,39 @@
       "presentationId": 2,
       "title": "SLIDE 2 elm framework",
       "contents": "# elm framework\n all images courtesy of [Elm Programming](http://elmprogramming.com/)\n\n![elm-framework](http://elmprogramming.com/images/elm-architecture/model-view-update.png)",
-      "isSelected": false,
-      "order": 0
+      "isSelected": true,
+      "order": 5
     },
     {
+      "presentationId": 2,
       "id": 8,
       "title": "SLIDE 4 elm runtime",
-      "presentationId": 2,
       "contents": "# elm runtime\n![elm-runtime](http://elmprogramming.com/images/elm-intro/elm-dirty-secret.png)",
-      "isSelected": false,
-      "order": 0
+      "isSelected": true,
+      "order": 4
     },
     {
-      "id": 9,
       "presentationId": 2,
+      "id": 9,
       "title": "SLIDE 3 elm overview",
       "contents": "# elm overview\n![elm](http://elmprogramming.com/images/elm-intro/elm-compiler.png)\n",
-      "isSelected": false,
-      "order": 0
+      "isSelected": true,
+      "order": 1
     },
     {
       "presentationId": 2,
       "id": 10,
       "title": "SLIDE 1 defining features & tooling",
       "contents": "# This app was built with\n### `Elm`\n![elm](https://frontendmasters.com/static-assets/workshops/thumbnails/elm.jpg)\n<h1 style=\"text-align:left;\">__&__</h1>\n### `nodejs`\n![nodejs](https://rishabh.io/tech/nodejs/img/nodejs.png)\n\n# NodeJS Tooling\n`yarn : to install dependencies `\n```\n  \"dependencies\": {\n    \"foreman\": \"2.0.0\", // to start up api and client at same time\n    \"json-server\": \"0.9.5\" // quick api mock up\n  }\n```\n## Elm-app-create\nscaffold the app\n\n# Elm specific Tooling\n`elm-app install <package>: to install package`\n```\n   \"dependencies\": {\n    \"NoRedInk/elm-decode-pipeline\": \"3.0.0 <= v < 4.0.0\", //json library \n    \"elm-lang/core\": \"5.0.0 <= v < 6.0.0\", //core lib for elm\n    \"elm-lang/html\": \"2.0.0 <= v < 3.0.0\", //html lib\n    \"elm-lang/http\": \"1.0.0 <= v < 2.0.0\", // http lib\n    \"evancz/elm-markdown\": \"3.0.2 <= v < 4.0.0\", // markdown lib\n    \"krisajenkins/remotedata\": \"4.3.1 <= v < 5.0.0\", // union type for http\n    \"surprisetalk/elm-bulma\": \"5.0.0 <= v < 6.0.0\" // css-bulma for simple styling\n  },\n```",
-      "isSelected": false,
-      "order": 0
+      "isSelected": true,
+      "order": 2
     },
     {
       "title": "SLIDE _11 DIP",
       "contents": "__Dependency inversion__\\n===\\n---\\n![IP](https://image.slidesharecdn.com/openclosedprinciplekata-130915060011-phpapp01/95/open-closed-principle-kata-9-638.jpg?cb=1379225200)\\n>High level modules should not depend on low level modules rather both should depend on abstraction.\\n\\n>Abstraction should not depend on concrete details; rather details should depend on abstractions.\\u201d\\n\\nIn JS the __ concern__ of the dependancy inversion principle is to ensure decoupling between components and their depenencies.\\n\\n__Dependency Injection__ is __Not__ related to the principle of dependancy inversion.\\n\\n__DI__ a different aspect of __Inversion of Control__ in which the concern being inverted is \\n__how a component obtains__ its dependencies rather than __who defines__ the interface.\\n\\nin DI dependencies are supplied to a component rather than the component obtaining the dependency by means of creating an instance of the dependency\\n\\nhttp://aspiringcraftsman.com/2012/01/22/solid-javascript-the-dependency-inversion-principle/",
       "id": 11,
       "isSelected": true,
-      "order": 2,
+      "order": 1,
       "presentationId": 3
     },
     {
@@ -119,7 +119,7 @@
       "contents": "uploads/image/fdb79615dcfbce156440b9d453b7b4d8.jpg)\\n\\n> ### Any extended entity should be able to replace the entity which it is an extension of without modifiyng the  __behavior__ of the application.\\n\\n```\\nif S is a subtype of T, \\nthen objects of type T\\nin a program may be replaced \\nwith objects of type S \\nwithout altering any of the desirable properties of that program```\\n\\n\\n\\n\\n#### \\u201ca violation of LSP is a latent violation of OCP\\u201d.\\n\\n\\nhttp://aspiringcraftsman.com/2011/12/31/solid-javascript-the-liskov-substitution-principle/",
       "id": 13,
       "isSelected": true,
-      "order": 3,
+      "order": 2,
       "presentationId": 3
     },
     {
@@ -135,15 +135,15 @@
       "contents": "__Single Responsibility__\\n===\\n-----\\n![srp](https://cdn-images-1.medium.com/max/839/1*3YaCOImYwSA4XTQS5nF5bQ.png)\\n> ### A class should have __only one reason to change__\\n\\n###  __NOT__ the _same as only do one thing_.\\n\\n![not srp](http://www.dotnetcurry.com/images/software-gardening/srp/single-responsibility-principle.jpg)\\n\\n----\\n### An object should have a __cohesive set of behaviors__, together comprising a single responsibility that, if changed, would require the modification of the object\\u2019s definition. \\n\\n### __cohesion__\\n* #### derives from the functional relatedness of elements in a module.\\n\\n* #### This leads to better/concise tests and improved code reliability\\n \\n### code smells:\\n   * #### large setups for testing,\\n   * #### more than one contextually different piece of code\\n\\nhttp://aspiringcraftsman.com/2011/12/08/solid-javascript-single-responsibility-principle/",
       "id": 15,
       "isSelected": true,
-      "order": 1,
+      "order": 3,
       "presentationId": 3
     },
     {
       "title": "SLIDE 6 - Princips of OOD",
       "contents": "__Principles of Object Oriented Design__\\n===\\n---\\n#### Principles are distillation of __patterns__ in nature.\\n#### __ Principles__   constrain our code and helps keep our code simple and bug free.\\n\\n #### __Robert C. Martin__ promoted  11 Principles\\n #### Detailing how to __design (5) and package (6)__ software.\\n  \\n\\n#### Michael Feathers coined the term __SOLID PRINCIPLES__ \\n\\n#### http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod\\n\\n![solid](https://cdn-images-1.medium.com/max/606/1*yO6YGExWLJl5VOUL61xXvQ.jpeg)",
       "id": 16,
-      "isSelected": true,
-      "order": 4,
+      "isSelected": false,
+      "order": 0,
       "presentationId": 3
     },
     {
@@ -151,15 +151,15 @@
       "contents": "### __Patterns__ are __repetitive__ designs;\\n### __simplify__ solutions to common problems.\\n![fractal](https://i.pinimg.com/736x/30/94/61/3094618c00ddbf7c5d4b2558d44ee6b9--golden-ration-fractals-in-nature.jpg)\\n __The__ Gang of Four\\n====\\n-----\\n#### __Design Patterns__: Elements of Reusable Object-Oriented Software \\n##### by _Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides_.\\n----\\n<table>\\n<tr>\\n<th>__Creational patterns (5)__<\\/th>\\n<th>__Structural patterns (7)__<\\/th>\\n<th>__Behavioral patterns (11)__<\\/th>\\n<\\/tr>\\n<tr>\\n<td>Factory method pattern<\\/td>\\n<td>Adapter pattern<\\/td>\\n<td>Chain-of-responsibility pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Abstract factory pattern<\\/td>\\n<td>Bridge pattern<\\/td>\\n<td>Command pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Singleton pattern<\\/td>\\n<td>Composite pattern<\\/td>\\n<td>Interpreter pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Builder pattern<\\/td>\\n<td>Decorator pattern<\\/td>\\n<td>Iterator pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Prototype pattern<\\/td>\\n<td>Facade pattern<\\/td>\\n<td>Mediator pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td>Flyweight pattern<\\/td>\\n<td>Memento pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td>Proxy pattern<\\/td>\\n<td>Observer pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>State pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>Strategy pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>Template method pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>Visitor pattern<\\/td>\\n<\\/tr>\\n<\\/table>\\n",
       "id": 17,
       "isSelected": false,
-      "order": 0,
+      "order": 4,
       "presentationId": 3
     },
     {
       "title": "SLIDE 4 - Princ of Design",
       "contents": "# __PRINCIPLES (...OF DESIGN)__\\n----------------\\n\\n### Occam's razor\\n >\\\"the simpleset solution is generely the correct one\\\"\\n\\n### Hanlon's razor:\\n > \\\"Never attribute to malice that which is adequately explained by stupidity\\\"\\n\\n### __QED__ \\n#### The __less complex__ the system - the more correct it will tend to be.",
       "id": 18,
-      "isSelected": true,
-      "order": 5,
+      "isSelected": false,
+      "order": 0,
       "presentationId": 3
     },
     {

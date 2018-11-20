@@ -17,6 +17,8 @@ const updateIsSelected = slide =>
 
 const updateOrder = slide => set(lensProp('order', slide), 0, slide)
 
+export const getId = item => prop('id', item)
+
 export const updateRemoveSlide = compose(
   Array.of,
   updateIsSelected,

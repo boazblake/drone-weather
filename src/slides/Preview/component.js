@@ -19,7 +19,6 @@ import {
   animateFadeOut,
 } from '../../services/animations.js'
 import { forLess, forGreater, reduceOrder, updateRemoveSlide } from './model.js'
-
 import { updateSlideTask } from '../../services/requests.js'
 import marked from 'marked'
 
@@ -27,20 +26,25 @@ import './style.css'
 
 const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
-  const onSuccess = _ => getSlides({ attrs: { Models } })
+  const onSuccess = _ => {
+    console.log(_)
+    getSlides({ attrs: { Models } })
+  }
 
   const updateAndSaveSlideTask = slide =>
-    updateSlideTask(prop('id', slide))(slide).fork(
-      onError('updating'),
-      onSuccess
-    )
+    updateSlideTask(prop('id', slide))(slide).fork(onError('updating'), x => {
+      log('bacthed?')(x)
+      m.redraw()
+    })
 
   const removeSlideTask = s => {
-    let head = filter(forLess(s), state.right)
-    let tail = compose(map(reduceOrder), filter(forGreater(s)))(state.right)
+    let head = filter(forLess(s), state.right())
+    let tail = compose(map(reduceOrder), filter(forGreater(s)))(state.right())
     let removeSlide = updateRemoveSlide(s)
 
     let updateList = reverse(concat(removeSlide, tail))
+
+    console.log('updateList', updateList, tail)
 
     return traverse(Task.of, updateAndSaveSlideTask, updateList)
   }
@@ -67,23 +71,24 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const handleDragEnd = ev => {
     ev.target.style.opacity = '1'
     state.slideDrag.dragging = false
+    if (state.previewDrag.drop) {
+      let start = state.previewDrag.drag.order
+      let end = state.previewDrag.drop.order
 
-    let start = state.previewDrag.drag.order
-    let end = state.previewDrag.drop.order
+      let dragged = state.previewDrag.drag
+      let dropped = state.previewDrag.drop
 
-    let dragged = clone(state.previewDrag.drag)
-    let dropped = clone(state.previewDrag.drop)
+      state.previewDrag.drag = Models.SlideModel
+      state.previewDrag.drop = Models.SlideModel
 
-    state.previewDrag.drag = Models.SlideModel
-    state.previewDrag.drop = Models.SlideModel
-
-    if (!eqProps('id', dragged, dropped)) {
-      dragged.order = end
-      dropped.order = start
-
-      updateAndSaveSlideTask(state.previewDrag.drag)
-        .chain(_ => updateAndSaveSlideTask(state.previewDrag.drop))
-        .fork(onError('updating'), onSuccess)
+      if (!eqProps('id', dragged, dropped)) {
+        dragged.order = end
+        dropped.order = start
+        console.log(dragged, dropped)
+        updateSlideTask(dragged.id)(dragged)
+          .chain(_ => updateSlideTask(dropped.id)(dropped))
+          .fork(onError('updating'), onSuccess)
+      }
     }
   }
 
@@ -106,10 +111,10 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
             width: '200px',
             height: '200px',
             margin: '12px',
-            opacity:
-              state.previewDrag.drop && state.previewDrag.drop.id == s.id
-                ? 0.4
-                : 1,
+            // opacity:
+            //   state.previewDrag.drop && state.previewDrag.drop.id == s.id
+            //     ? 0.4
+            //     : 1,
           },
         },
         [

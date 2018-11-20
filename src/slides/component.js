@@ -1,4 +1,5 @@
 import m from 'mithril'
+import Stream from 'mithril-stream'
 import {
   clone,
   merge,
@@ -26,8 +27,8 @@ import './style.css'
 
 const Slides = ({ attrs: { Models } }) => {
   const state = {
-    left: [],
-    right: [],
+    left: Stream([]),
+    right: Stream([]),
     slideDrag: {
       dragId: '',
       dragging: false,
@@ -38,22 +39,24 @@ const Slides = ({ attrs: { Models } }) => {
       drop: null,
     },
   }
+  console.log('state', state)
 
   const onError = error => console.log('error', error)
 
   const onSuccess = presentation => {
     Models.CurrentPresentation = merge(Models.CurrentPresentation, presentation)
 
-    state.left = filter(
-      propEq('isSelected', false),
-      Models.CurrentPresentation.slides
+    state.left(
+      filter(propEq('isSelected', false), Models.CurrentPresentation.slides)
     )
-    state.right = sortBy(
-      prop('order'),
-      filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
+    state.right(
+      sortBy(
+        prop('order'),
+        filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
+      )
     )
 
-    console.log(state)
+    console.log('onload', { left: state.left(), right: state.right() })
   }
 
   const getSlides = ({ attrs: { Models } }) => {
@@ -82,17 +85,22 @@ const Slides = ({ attrs: { Models } }) => {
     if (state.slideDrag.dragging) {
       if (type == 'slide') {
         let item = head(
-          filter(propEq('id', state.slideDrag.dragId), state.left)
+          filter(propEq('id', state.slideDrag.dragId), state.left())
         )
-        item.order = state.right.length + 1
+        item.order = state.right().length + 1
         state.slideDrag.droppable = true
-        state.left = without([item], state.left)
-        state.right = concat(state.right, [item])
+        state.left(without([item], state.left()))
+        state.right(concat(state.right(), [item]))
 
-        console.log('items list length', item, state.right, state.right.length)
+        console.log(
+          'items list length',
+          item,
+          state.right(),
+          state.right().length
+        )
       } else {
         let item = head(
-          filter(propEq('id', state.slideDrag.dragId), state.right)
+          filter(propEq('id', state.slideDrag.dragId), state.right())
         )
       }
     }
@@ -120,14 +128,14 @@ const Slides = ({ attrs: { Models } }) => {
         m(
           'section.left-drag',
           {
-            oncreate: ({ dom }) => animateFadeIn({ dom }),
+            oncreate: ({ dom }) => animateEntrance({ dom }),
             onBeforeRemove: (vnode, done) => {
               vnode.dom.addEventListener('animationend', done)
               vnode.dom.style.animation = 'fadeOut 1s'
             },
           },
           [
-            state.left.map(s =>
+            state.left().map(s =>
               m(Slide, {
                 key: s.id,
                 Models,
@@ -142,7 +150,7 @@ const Slides = ({ attrs: { Models } }) => {
         m(
           'section.right-drag',
           {
-            oncreate: ({ dom }) => animateFadeIn({ dom }),
+            oncreate: ({ dom }) => animateEntrance({ dom }),
             onBeforeRemove: (vnode, done) => {
               vnode.dom.addEventListener('animationend', done)
               vnode.dom.style.animation = 'fadeOut 1s'
@@ -158,7 +166,7 @@ const Slides = ({ attrs: { Models } }) => {
             ondragenter: handleDragEnter,
           },
 
-          state.right.map(s =>
+          state.right().map(s =>
             m(Preview, {
               key: s.id,
               Models,

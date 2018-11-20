@@ -1,3 +1,5 @@
+import anime from 'animejs'
+
 export const animateEntrance = ({ dom }) => {
   let children = [...dom.children]
 
@@ -64,4 +66,20 @@ export const animateFadeOut = ({ dom }) => {
       resolve()
     }
   })
+}
+
+export const animeEntrance = ({ dom }) => {
+  let children = [...dom.children]
+  console.log(children)
+  const res = children.map(el =>
+    anime({
+      target: el,
+      easing: 'easeInQuad',
+      translateX: 250,
+      offset: 0,
+    })
+  )
+
+  console.log('anim', res)
+  return res
 }

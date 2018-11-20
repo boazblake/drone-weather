@@ -6,6 +6,7 @@ import {
   animateExit,
   animateFadeIn,
   animateFadeOut,
+  animeEntrance,
 } from '../../services/animations.js'
 import { take, prop } from 'ramda'
 import '../style.css'
@@ -40,7 +41,7 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const handleDragEnd = ev => {
     ev.target.style.opacity = '1'
     if (state.slideDrag.droppable) {
-      s = updateSlideDragEnd(state.right.length)(s)
+      s = updateSlideDragEnd(state.right().length)(s)
       updateStateDragEnd(state.slideDrag)
       return addSlideToShow(s)
     }
