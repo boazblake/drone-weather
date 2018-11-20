@@ -66,12 +66,14 @@ const Slides = ({ attrs: { Models } }) => {
 
   const handleDragEnter = ev => {
     ev.preventDefault()
+    state.bColor = true
   }
 
   const handleDragLeave = ev => {
     ev.preventDefault()
     state.slideDrag.dragging = false
     state.slideDrag.droppable = false
+    state.bColor = false
   }
 
   const handleDrop = ev => {
@@ -116,18 +118,12 @@ const Slides = ({ attrs: { Models } }) => {
         : '',
       m('section.section', [
         m(
-          'section.section columns is-multiline leftDrag',
+          'section.left-drag',
           {
             oncreate: ({ dom }) => animateFadeIn({ dom }),
             onBeforeRemove: (vnode, done) => {
               vnode.dom.addEventListener('animationend', done)
               vnode.dom.style.animation = 'fadeOut 1s'
-            },
-            style: {
-              overflow: 'scroll',
-              height: '80vh',
-              width: '25%',
-              display: 'inline-block',
             },
           },
           [
@@ -144,7 +140,7 @@ const Slides = ({ attrs: { Models } }) => {
         ),
 
         m(
-          'section.section columns is-multiline rightDrag',
+          'section.right-drag',
           {
             oncreate: ({ dom }) => animateFadeIn({ dom }),
             onBeforeRemove: (vnode, done) => {
@@ -153,15 +149,8 @@ const Slides = ({ attrs: { Models } }) => {
             },
             style: {
               border: state.slideDrag.dragging
-                ? '1px dashed white'
-                : '1px dashed grey',
-              overflow: 'scroll',
-              height: '80vh',
-              display: 'inline-block',
-              width: '70%',
-              'padding-top': 0,
-              'padding-right': 0,
-              'margin-left': '5%',
+                ? '1px dashed #ecf0f1'
+                : '1px dashed #95a5a6',
             },
             ondragleave: handleDragLeave,
             ondrop: handleDrop,
@@ -171,14 +160,6 @@ const Slides = ({ attrs: { Models } }) => {
 
           state.right.map(s =>
             m(Preview, {
-              ondragover: e => {
-                e.preventDefault()
-                console.log('preview dragged?')
-              },
-              ondragenter: e => {
-                e.preventDefault()
-                console.log('preview enterd?')
-              },
               key: s.id,
               Models,
               getSlides,

@@ -7,8 +7,13 @@ import {
   animateFadeIn,
   animateFadeOut,
 } from '../../services/animations.js'
-import { take } from 'ramda'
+import { take, prop } from 'ramda'
 import '../style.css'
+import {
+  updateSlideDragStart,
+  updateSlideDragEnd,
+  updateStateDragEnd,
+} from './model.js'
 
 const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
@@ -22,25 +27,22 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
       .chain(deleteSlideTask)
       .fork(onError('deleting'), onSuccess)
 
-  const selectSlide = id =>
-    updateSlideTask(id)(s).fork(onError('updating'), onSuccess)
+  const addSlideToShow = s =>
+    updateSlideTask(prop('id', s))(s).fork(onError('updating'), onSuccess)
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
-    state.slideDrag.dragging = true
-    state.slideDrag.dragId = s.id
     ev.dataTransfer.effectAllowed = 'move'
     ev.dataTransfer.setData('text/plain', 'slide')
+    state.slideDrag = updateSlideDragStart(s)(state.slideDrag)
   }
 
   const handleDragEnd = ev => {
     ev.target.style.opacity = '1'
     if (state.slideDrag.droppable) {
-      s.order = state.right.length
-      s.isSelected = true
-      state.slideDrag.dragging = false
-      state.slideDrag.droppable = false
-      return selectSlide(s.id)
+      s = updateSlideDragEnd(state.right.length)(s)
+      updateStateDragEnd(state.slideDrag)
+      return addSlideToShow(s)
     }
   }
 
