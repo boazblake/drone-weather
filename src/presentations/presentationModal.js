@@ -3,7 +3,6 @@ import { toPresentationDtoTask } from './model.js'
 import { log } from '../services/index.js'
 
 const PresentationModal = ({ attrs }) => {
-  console.log('pmopd', attrs)
   const state = {
     errors: '',
     title: '',

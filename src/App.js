@@ -44,8 +44,8 @@ export const App = ({ attrs: model }) => {
 
   return {
     oninit: findPresentations,
-    oncreate: vnode => {
-      const mainStage = vnode.dom.querySelector('.main-stage')
+    oncreate: ({ dom }) => {
+      const mainStage = dom.querySelector('.main-stage')
 
       m.route(mainStage, '/presentations', makeRoutes(model))
     },

@@ -26,10 +26,7 @@ import './style.css'
 
 const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
-  const onSuccess = _ => {
-    console.log(_)
-    return getSlides({ attrs: { Models } })
-  }
+  const onSuccess = _ => getSlides({ attrs: { Models } })
 
   const updateAndSaveSlideTask = slide =>
     updateSlideTask(prop('id', slide))(slide).fork(
@@ -42,9 +39,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
     let tail = compose(map(reduceOrder), filter(forGreater(s)))(state.right())
     let removeSlide = updateRemoveSlide(s)
 
-    let updateList = reverse(concat(removeSlide, tail))
-
-    console.log('updateList', updateList, tail)
+    let updateList = concat(removeSlide, tail)
 
     return traverse(Task.of, updateAndSaveSlideTask, updateList)
   }
@@ -85,8 +80,6 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
       if (!eqProps('id', dragged, dropped)) {
         dragged.order = end
         dropped.order = start
-        console.log('state v', state.previewDrag.drag, state.previewDrag.drop)
-        console.log('dnd v', dragged, dropped)
         updateSlideTask(dragged.id)(dragged)
           .chain(_ => updateSlideTask(dropped.id)(dropped))
           .fork(onError('updating'), onSuccess)

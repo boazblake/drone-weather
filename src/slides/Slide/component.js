@@ -30,7 +30,6 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
   const addSlideToShow = s =>
     updateSlideTask(prop('id', s))(s).fork(onError('updating'), x => {
-      console.log('slide added', x)
       state.slideDrag = {
         dragId: '',
         dragging: false,

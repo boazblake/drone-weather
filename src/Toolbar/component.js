@@ -1,5 +1,14 @@
 import m from 'mithril'
-import { contains, filter, propEq } from 'ramda'
+import {
+  contains,
+  filter,
+  propEq,
+  isEmpty,
+  length,
+  split,
+  view,
+  lensProp,
+} from 'ramda'
 import { log } from '../services/index.js'
 
 const toggleModal = model => {
@@ -7,6 +16,7 @@ const toggleModal = model => {
     m(
       'a.navbar-item',
       {
+        oncreate: m.route.link,
         onclick: () => (model.toggleModal = !model.toggleModal),
       },
       'Add New'
@@ -17,7 +27,8 @@ const toPresentations = [
   m(
     'a.navbar-item',
     {
-      onclick: () => m.route.set('/presentations'),
+      oncreate: m.route.link,
+      href: '/presentations',
     },
     'Presentations'
   ),
@@ -27,8 +38,8 @@ const toSlides = model => [
   m(
     'a.navbar-item',
     {
-      onclick: () =>
-        m.route.set(`/presentation/${model.CurrentPresentation.id}/slides`),
+      oncreate: m.route.link,
+      href: `/presentation/${model.CurrentPresentation.id}/slides`,
     },
     'slides'
   ),
@@ -38,12 +49,11 @@ const toSlideShow = model => [
   m(
     'a.navbar-item',
     {
-      disabled:
-        filter(propEq('isSelected', true), model.CurrentPresentation.slides)
-          .length == 0
-          ? true
-          : false,
-      onclick: () => m.route.set(`/slideshow/${model.CurrentPresentation.id}`),
+      disabled: isEmpty(length(model.CurrentPresentation.slideShow))
+        ? true
+        : false,
+      oncreate: m.route.link,
+      href: `/slideshow/${model.CurrentPresentation.id}`,
     },
     'Slide Show'
   ),
@@ -66,6 +76,8 @@ const navView = model => page => {
     case 'edit':
       return [toPresentations, toSlides(model), toSlideShow(model)]
       break
+    default:
+    // log('navView errorpage')()
   }
 }
 
@@ -77,19 +89,13 @@ const actionView = model => page => {
     case 'presentation':
       return [toggleModal(model)]
       break
-    case 'edit':
-      break
-    case 'slides':
-      break
     default:
-      console.log('errorpage')
-      break
+    // log('actionView errorpage')()
   }
 }
 
 const Toolbar = ({ attrs: { Models } }) => {
-  console.log('pres in toolbar', Models.CurrentPresentation)
-  const currentPage = m.route.get().split('/')[1]
+  const currentPage = view(lensProp(1), split('/', m.route.get()))
   return {
     view: () =>
       m(

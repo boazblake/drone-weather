@@ -31,7 +31,7 @@ const SlideShow = ({ attrs: { Models } }) => {
   const doubleClick = e => {
     state.clicks++
     setTimeout(() => {
-      // console.log('set time out runnign', state.clicks)
+      log('set time out runnign')(state.clicks)
       state.clicks >= 1 ? makeFullScreen() : makeSmallScreen()
     }, 300)
     e.preventDefault()
@@ -42,8 +42,6 @@ const SlideShow = ({ attrs: { Models } }) => {
       prop('order'),
       filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
     ).map(prop('contents'))
-
-    console.log(Models.CurrentPresentation.slideShow)
 
     state.size = Models.CurrentPresentation.slideShow.length - 1
     state.contents = Models.CurrentPresentation.slideShow

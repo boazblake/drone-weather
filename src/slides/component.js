@@ -39,9 +39,8 @@ const Slides = ({ attrs: { Models } }) => {
       drop: null,
     },
   }
-  console.log('state', state)
 
-  const onError = error => console.log('error', error)
+  const onError = log('error')
 
   const onSuccess = presentation => {
     Models.CurrentPresentation = merge(Models.CurrentPresentation, presentation)
@@ -55,8 +54,7 @@ const Slides = ({ attrs: { Models } }) => {
         filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
       )
     )
-
-    console.log('onload', { state, left: state.left(), right: state.right() })
+    // console.log('updating slides', Models)
   }
 
   const getSlides = ({ attrs: { Models } }) => {
@@ -170,6 +168,7 @@ const Slides = ({ attrs: { Models } }) => {
           })
         ),
       ]),
+      m('pre.pre', JSON.stringify(Models, null, 2)),
     ],
   }
 }
