@@ -1309,6 +1309,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.2.5:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+
 clean-css@4.1.x:
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.1.9.tgz#35cee8ae7687a49b98034f70de00c4edd3826301"
@@ -1569,6 +1573,10 @@ copy-descriptor@^0.1.0:
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
+
+core-js@^2.5.3:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -2306,6 +2314,13 @@ faye-websocket@~0.11.0:
   resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.11.1.tgz#f0efe18c4f56e4f40afc7e06c719fd5ee6188f38"
   dependencies:
     websocket-driver ">=0.5.1"
+
+feather-icons@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/feather-icons/-/feather-icons-4.9.0.tgz#be9c0246639cc0ba75b9c2fd168e303c2a145f34"
+  dependencies:
+    classnames "^2.2.5"
+    core-js "^2.5.3"
 
 figures@^1.3.5, figures@^1.7.0:
   version "1.7.0"
@@ -3907,9 +3922,9 @@ mithril-stream@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mithril-stream/-/mithril-stream-1.1.0.tgz#ab369a84ce585a274c4179b5dee02cb127c739fb"
 
-mithril@1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/mithril/-/mithril-1.1.6.tgz#bd2cc0de3d3c86076a6a7a30367a601a1bd108f3"
+mithril@^2.0.0-rc.1:
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/mithril/-/mithril-2.0.0-rc.1.tgz#8c6a209af7aef82efcf54b457dcd6751aeca8a7d"
 
 mixin-deep@^1.2.0:
   version "1.3.1"

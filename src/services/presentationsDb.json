@@ -24,7 +24,7 @@
       "title": "takeaways",
       "contents": "# TAKEAWAYs\n## overall I ![elm-app-heart](https://marcosh.github.io/presentations/2016/10/28/img/elm_heart.png), \n## aside\nhow to start with fp is diff from OO ... need to first think about what you want to create and build the model up first. \n\n# some of the many challanges ...\n1. saving to db\n2. managing state",
       "isSelected": true,
-      "order": 3
+      "order": 4
     },
     {
       "presentationId": 2,
@@ -55,8 +55,8 @@
       "id": 5,
       "title": "SLIDE 6 virtual dom",
       "contents": "# virtual dom\n![virtual-dom](http://elmprogramming.com/images/virtual-dom/elm-runtime-virtual-dom.png)",
-      "isSelected": false,
-      "order": 0
+      "isSelected": true,
+      "order": 3
     },
     {
       "presentationId": 2,
@@ -72,7 +72,7 @@
       "title": "SLIDE 2 elm framework",
       "contents": "# elm framework\n all images courtesy of [Elm Programming](http://elmprogramming.com/)\n\n![elm-framework](http://elmprogramming.com/images/elm-architecture/model-view-update.png)",
       "isSelected": true,
-      "order": 5
+      "order": 2
     },
     {
       "presentationId": 2,
@@ -80,7 +80,7 @@
       "title": "SLIDE 4 elm runtime",
       "contents": "# elm runtime\n![elm-runtime](http://elmprogramming.com/images/elm-intro/elm-dirty-secret.png)",
       "isSelected": true,
-      "order": 4
+      "order": 5
     },
     {
       "presentationId": 2,
@@ -96,7 +96,7 @@
       "title": "SLIDE 1 defining features & tooling",
       "contents": "# This app was built with\n### `Elm`\n![elm](https://frontendmasters.com/static-assets/workshops/thumbnails/elm.jpg)\n<h1 style=\"text-align:left;\">__&__</h1>\n### `nodejs`\n![nodejs](https://rishabh.io/tech/nodejs/img/nodejs.png)\n\n# NodeJS Tooling\n`yarn : to install dependencies `\n```\n  \"dependencies\": {\n    \"foreman\": \"2.0.0\", // to start up api and client at same time\n    \"json-server\": \"0.9.5\" // quick api mock up\n  }\n```\n## Elm-app-create\nscaffold the app\n\n# Elm specific Tooling\n`elm-app install <package>: to install package`\n```\n   \"dependencies\": {\n    \"NoRedInk/elm-decode-pipeline\": \"3.0.0 <= v < 4.0.0\", //json library \n    \"elm-lang/core\": \"5.0.0 <= v < 6.0.0\", //core lib for elm\n    \"elm-lang/html\": \"2.0.0 <= v < 3.0.0\", //html lib\n    \"elm-lang/http\": \"1.0.0 <= v < 2.0.0\", // http lib\n    \"evancz/elm-markdown\": \"3.0.2 <= v < 4.0.0\", // markdown lib\n    \"krisajenkins/remotedata\": \"4.3.1 <= v < 5.0.0\", // union type for http\n    \"surprisetalk/elm-bulma\": \"5.0.0 <= v < 6.0.0\" // css-bulma for simple styling\n  },\n```",
       "isSelected": true,
-      "order": 2
+      "order": 6
     },
     {
       "title": "SLIDE _11 DIP",
@@ -110,8 +110,8 @@
       "title": "SLIDE _10- ISP",
       "contents": "__Interface Segregation Principle__\\n===\\n-----\\n![ISP](http://deviq.com/wp-content/uploads/2014/11/InterfaceSegregation.jpg)\\n\\n#### The cohesion of __interfaces within a system__.\\n\\n##### ... JS does not have interfaces ...\\n\\n>#### Clients should not be forced to depend on __methods__ they do not use.\\n\\n__The operation\\u2019s signature__ :\\nEvery operation declared by an object specifies the operation\\u2019s name, the objects it takes as parameters, and the operation\\u2019s return value. \\n\\n__The set of all signatures__ defined by an object\\u2019s operations is called the interface to the object.\\n\\nhttp://aspiringcraftsman.com/2012/01/08/solid-javascript-the-interface-segregation-principle/",
       "id": 12,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 2,
       "presentationId": 3
     },
     {
@@ -119,7 +119,7 @@
       "contents": "uploads/image/fdb79615dcfbce156440b9d453b7b4d8.jpg)\\n\\n> ### Any extended entity should be able to replace the entity which it is an extension of without modifiyng the  __behavior__ of the application.\\n\\n```\\nif S is a subtype of T, \\nthen objects of type T\\nin a program may be replaced \\nwith objects of type S \\nwithout altering any of the desirable properties of that program```\\n\\n\\n\\n\\n#### \\u201ca violation of LSP is a latent violation of OCP\\u201d.\\n\\n\\nhttp://aspiringcraftsman.com/2011/12/31/solid-javascript-the-liskov-substitution-principle/",
       "id": 13,
       "isSelected": true,
-      "order": 2,
+      "order": 3,
       "presentationId": 3
     },
     {
@@ -134,16 +134,16 @@
       "title": "SLIDE 7 SRP",
       "contents": "__Single Responsibility__\\n===\\n-----\\n![srp](https://cdn-images-1.medium.com/max/839/1*3YaCOImYwSA4XTQS5nF5bQ.png)\\n> ### A class should have __only one reason to change__\\n\\n###  __NOT__ the _same as only do one thing_.\\n\\n![not srp](http://www.dotnetcurry.com/images/software-gardening/srp/single-responsibility-principle.jpg)\\n\\n----\\n### An object should have a __cohesive set of behaviors__, together comprising a single responsibility that, if changed, would require the modification of the object\\u2019s definition. \\n\\n### __cohesion__\\n* #### derives from the functional relatedness of elements in a module.\\n\\n* #### This leads to better/concise tests and improved code reliability\\n \\n### code smells:\\n   * #### large setups for testing,\\n   * #### more than one contextually different piece of code\\n\\nhttp://aspiringcraftsman.com/2011/12/08/solid-javascript-single-responsibility-principle/",
       "id": 15,
-      "isSelected": true,
-      "order": 3,
+      "isSelected": false,
+      "order": 0,
       "presentationId": 3
     },
     {
       "title": "SLIDE 6 - Princips of OOD",
       "contents": "__Principles of Object Oriented Design__\\n===\\n---\\n#### Principles are distillation of __patterns__ in nature.\\n#### __ Principles__   constrain our code and helps keep our code simple and bug free.\\n\\n #### __Robert C. Martin__ promoted  11 Principles\\n #### Detailing how to __design (5) and package (6)__ software.\\n  \\n\\n#### Michael Feathers coined the term __SOLID PRINCIPLES__ \\n\\n#### http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod\\n\\n![solid](https://cdn-images-1.medium.com/max/606/1*yO6YGExWLJl5VOUL61xXvQ.jpeg)",
       "id": 16,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 4,
       "presentationId": 3
     },
     {
@@ -151,15 +151,15 @@
       "contents": "### __Patterns__ are __repetitive__ designs;\\n### __simplify__ solutions to common problems.\\n![fractal](https://i.pinimg.com/736x/30/94/61/3094618c00ddbf7c5d4b2558d44ee6b9--golden-ration-fractals-in-nature.jpg)\\n __The__ Gang of Four\\n====\\n-----\\n#### __Design Patterns__: Elements of Reusable Object-Oriented Software \\n##### by _Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides_.\\n----\\n<table>\\n<tr>\\n<th>__Creational patterns (5)__<\\/th>\\n<th>__Structural patterns (7)__<\\/th>\\n<th>__Behavioral patterns (11)__<\\/th>\\n<\\/tr>\\n<tr>\\n<td>Factory method pattern<\\/td>\\n<td>Adapter pattern<\\/td>\\n<td>Chain-of-responsibility pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Abstract factory pattern<\\/td>\\n<td>Bridge pattern<\\/td>\\n<td>Command pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Singleton pattern<\\/td>\\n<td>Composite pattern<\\/td>\\n<td>Interpreter pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Builder pattern<\\/td>\\n<td>Decorator pattern<\\/td>\\n<td>Iterator pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td>Prototype pattern<\\/td>\\n<td>Facade pattern<\\/td>\\n<td>Mediator pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td>Flyweight pattern<\\/td>\\n<td>Memento pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td>Proxy pattern<\\/td>\\n<td>Observer pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>State pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>Strategy pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>Template method pattern<\\/td>\\n<\\/tr>\\n<tr>\\n<td><\\/td>\\n<td><\\/td>\\n<td>Visitor pattern<\\/td>\\n<\\/tr>\\n<\\/table>\\n",
       "id": 17,
       "isSelected": false,
-      "order": 4,
+      "order": 0,
       "presentationId": 3
     },
     {
       "title": "SLIDE 4 - Princ of Design",
       "contents": "# __PRINCIPLES (...OF DESIGN)__\\n----------------\\n\\n### Occam's razor\\n >\\\"the simpleset solution is generely the correct one\\\"\\n\\n### Hanlon's razor:\\n > \\\"Never attribute to malice that which is adequately explained by stupidity\\\"\\n\\n### __QED__ \\n#### The __less complex__ the system - the more correct it will tend to be.",
       "id": 18,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 5,
       "presentationId": 3
     },
     {
@@ -198,16 +198,16 @@
       "title": "SLIDE 3B",
       "contents": "WHY SO MUCH CONFUSION ?\\n===\\n\\n![kyle simpson](https://images.hanselminutes.com/images/500.jpg)\\n**Kyle Simpson**\\n>  We have spent the better part of 19 years since JS was invented **pretending** that its internal mechanisms are **class based** so we spent all our time trying to syntactictly sugar-coat it instead of realizing that JS internal mechanisms are **linkages not copies**.\\n\\n  https://app.pluralsight.com/player?course=advanced-javascript&author=kyle-simpson&name=advanced-javascript-m4&clip=9&mode=live\\n",
       "id": 23,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 1,
       "presentationId": 4
     },
     {
       "title": "SLIDE 0",
       "contents": "# Everyone hates JavaScript \\n Q: WTF is This?? (what/when)\\n\\nA:** You dont know JS**\\n\\n![kyle simpson](https://images.hanselminutes.com/images/500.jpg)\\n**Kyle Simpson**\\n>JS has been plagued since the beginning with **misunderstanding** and **awkwardness** around its \\\"prototypal inheritance\\\" system, mostly due to the fact that **\\\"inheritance\\\"** isn't how JS works. \\n",
       "id": 24,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 2,
       "presentationId": 4
     },
     {
@@ -230,8 +230,8 @@
       "title": "SLIDE 5",
       "contents": "HOW TO CREATE OBJECTS IN JS?\n![objects in js](http://imagizer.imageshack.us/a/img911/5519/fxn2D3.png)\n###New Constructor Fn:1. Brand new object2. Object gets linked to its prototype 3. Context gets set to this 4. Returns this Thanks to **Doug Crockford** (JavaScript the good parts, monads and gonads) we have built in to ES5 **Object.create** does the first 2 things that the new constructor does:. create a brand new object, and 2. links it to its prototype \\\"Under the hood\\\" Object.create does this: where `o` is the object we wish to delegate to```function object(o) {  function F() {}  F.prototype = o;  return new F();};```",
       "id": 27,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 3,
       "presentationId": 4
     },
     {
@@ -246,8 +246,8 @@
       "title": "SLIDE 3",
       "contents": "\\n\\nRebuttels from OO commmunity\\n===\\n**Junade Ali, **Mastering PHP Design Patterns:\\n>Object-oriented programming is more than just classes and objects;\\n\\n>it's a whole programming paradigm based around data structures that contain data fields and methods. i.e. objects.\\n> It is essential to understand that just using classes to organize a bunch of unrelated methods together is not object orientation.\\n\\n**Douglas Crockford**:\\n> You make prototype objects, and then \\u2026 make new instances of them.\\nObjects are mutable in JavaScript, so we can augment the new instances, giving them new fields and methods. These can then act as prototypes for even newer objects.\\n\\n> We don't need classes to make lots of similar objects\\u2026 Objects inherit from objects.\\n    What could be more object oriented than that?\\\"\\n\\n**Alan Kay**:\\n>I'm sorry that I long ago coined the term \\\"objects\\\" for this topic because it gets many people to focus on the **lesser idea {of objects}**  when the big idea is **messaging.**\\n\\n>OOP to me means:\\n1. Communicating by messages,\\n2. local retention and protection and hiding of state-process, and \\n3. extreme late-binding of all things. \\n\\nhttp://userpage.fu-berlin.de/~ram/pub/pub_jf47ht81Ht/doc_kay_oop_en\\n\\n```\\nobj {}\\n      -> have a notion of this\\n      -> data would be perfectly encapsulate as attributes\\n      -> communicate with messages to other objects using public methods.\\n```",
       "id": 29,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 4,
       "presentationId": 4
     },
     {

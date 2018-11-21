@@ -29,7 +29,15 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
       .fork(onError('deleting'), onSuccess)
 
   const addSlideToShow = s =>
-    updateSlideTask(prop('id', s))(s).fork(onError('updating'), onSuccess)
+    updateSlideTask(prop('id', s))(s).fork(onError('updating'), x => {
+      console.log('slide added', x)
+      state.slideDrag = {
+        dragId: '',
+        dragging: false,
+        droppable: false,
+      }
+      onSuccess()
+    })
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
@@ -41,9 +49,10 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const handleDragEnd = ev => {
     ev.target.style.opacity = '1'
     if (state.slideDrag.droppable) {
-      s = updateSlideDragEnd(state.right().length)(s)
+      let _slide = updateSlideDragEnd(state.right().length)(s)
+
       updateStateDragEnd(state.slideDrag)
-      return addSlideToShow(s)
+      return addSlideToShow(_slide)
     }
   }
 

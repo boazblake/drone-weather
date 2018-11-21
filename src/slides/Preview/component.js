@@ -28,14 +28,14 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
   const onSuccess = _ => {
     console.log(_)
-    getSlides({ attrs: { Models } })
+    return getSlides({ attrs: { Models } })
   }
 
   const updateAndSaveSlideTask = slide =>
-    updateSlideTask(prop('id', slide))(slide).fork(onError('updating'), x => {
-      log('bacthed?')(x)
-      m.redraw()
-    })
+    updateSlideTask(prop('id', slide))(slide).fork(
+      onError('updating'),
+      onSuccess
+    )
 
   const removeSlideTask = s => {
     let head = filter(forLess(s), state.right())
@@ -53,6 +53,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
     ev.target.style.opacity = '0.4'
     ev.dataTransfer.effectAllowed = 'move'
     ev.dataTransfer.setData('text/plain', 'preview')
+    s.isSelected = true //some reason s.isSelected is still false at this point
     state.previewDrag.drag = s
   }
 
@@ -84,7 +85,8 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
       if (!eqProps('id', dragged, dropped)) {
         dragged.order = end
         dropped.order = start
-        console.log(dragged, dropped)
+        console.log('state v', state.previewDrag.drag, state.previewDrag.drop)
+        console.log('dnd v', dragged, dropped)
         updateSlideTask(dragged.id)(dragged)
           .chain(_ => updateSlideTask(dropped.id)(dropped))
           .fork(onError('updating'), onSuccess)

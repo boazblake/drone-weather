@@ -56,7 +56,7 @@ const Slides = ({ attrs: { Models } }) => {
       )
     )
 
-    console.log('onload', { left: state.left(), right: state.right() })
+    console.log('onload', { state, left: state.left(), right: state.right() })
   }
 
   const getSlides = ({ attrs: { Models } }) => {
@@ -91,13 +91,6 @@ const Slides = ({ attrs: { Models } }) => {
         state.slideDrag.droppable = true
         state.left(without([item], state.left()))
         state.right(concat(state.right(), [item]))
-
-        console.log(
-          'items list length',
-          item,
-          state.right(),
-          state.right().length
-        )
       } else {
         let item = head(
           filter(propEq('id', state.slideDrag.dragId), state.right())
@@ -166,15 +159,15 @@ const Slides = ({ attrs: { Models } }) => {
             ondragenter: handleDragEnter,
           },
 
-          state.right().map(s =>
-            m(Preview, {
+          state.right().map(s => {
+            return m(Preview, {
               key: s.id,
               Models,
               getSlides,
               s,
               state,
             })
-          )
+          })
         ),
       ]),
     ],

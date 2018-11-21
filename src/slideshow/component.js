@@ -1,7 +1,7 @@
 import m from 'mithril'
 import Stream from 'mithril-stream'
 import marked from 'marked'
-import { filter, propEq, prop } from 'ramda'
+import { filter, propEq, prop, sortBy } from 'ramda'
 import { log } from '../services/index.js'
 import {
   animateEntrance,
@@ -38,10 +38,13 @@ const SlideShow = ({ attrs: { Models } }) => {
   }
 
   const loadSlideShow = ({ attrs: { Models } }) => {
-    Models.CurrentPresentation.slideShow = filter(
-      propEq('isSelected', true),
-      Models.CurrentPresentation.slides
+    Models.CurrentPresentation.slideShow = sortBy(
+      prop('order'),
+      filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
     ).map(prop('contents'))
+
+    console.log(Models.CurrentPresentation.slideShow)
+
     state.size = Models.CurrentPresentation.slideShow.length - 1
     state.contents = Models.CurrentPresentation.slideShow
     state.slide = state.contents[state.cursor]
@@ -74,29 +77,34 @@ const SlideShow = ({ attrs: { Models } }) => {
           },
         },
         [
-          m('.hero', [
-            m('.hero-body', [
-              m(
-                '.box',
-                {
-                  onupdate: ({ dom }) => animateFadeIn({ dom }),
-                  oncreate: ({ dom }) => animateFadeIn({ dom }),
-                  onBeforeRemove: (vnode, done) => {
-                    vnode.dom.addEventListener('animationend', done)
-                    vnode.dom.style.animation = 'fadeOut 1s'
+          m('.hero box', { style: { width: '100%', height: '100%' } }, [
+            m(
+              '.hero-body',
+              { style: { width: '100%', height: '100%', margin: 0 } },
+              [
+                m(
+                  '.box',
+                  {
+                    style: { width: '100vh', height: '100vh', margin: 0 },
+                    onupdate: ({ dom }) => animateFadeIn({ dom }),
+                    oncreate: ({ dom }) => animateFadeIn({ dom }),
+                    onBeforeRemove: (vnode, done) => {
+                      vnode.dom.addEventListener('animationend', done)
+                      vnode.dom.style.animation = 'fadeOut 1s'
+                    },
+                    onclick: doubleClick,
+                    style: {
+                      height: '80vh',
+                      width: `100${state.isFullscreen}`,
+                      overflow: 'scroll',
+                    },
                   },
-                  onclick: doubleClick,
-                  style: {
-                    height: '80vh',
-                    width: `100${state.isFullscreen}`,
-                    overflow: 'scroll',
-                  },
-                },
-                m.trust(
-                  marked(state.contents[state.cursor] || 'No Slides Added')
-                )
-              ),
-            ]),
+                  m.trust(
+                    marked(state.contents[state.cursor] || 'No Slides Added')
+                  )
+                ),
+              ]
+            ),
           ]),
         ]
       )
