@@ -86,10 +86,10 @@ const SlideShow = ({ attrs: { Models } }) => {
                     style: { width: '100vh', height: '100vh', margin: 0 },
                     onupdate: ({ dom }) => animateFadeIn({ dom }),
                     oncreate: ({ dom }) => animateFadeIn({ dom }),
-                    onBeforeRemove: (vnode, done) => {
-                      vnode.dom.addEventListener('animationend', done)
-                      vnode.dom.style.animation = 'fadeOut 1s'
-                    },
+                    // onBeforeRemove: (vnode, done) => {
+                    //   vnode.dom.addEventListener('animationend', done)
+                    //   vnode.dom.style.animation = 'fadeOut 1s'
+                    // },
                     onclick: doubleClick,
                     style: {
                       height: '80vh',

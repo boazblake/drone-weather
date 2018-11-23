@@ -6,7 +6,7 @@ import Slides from './slides/component.js'
 import Editor from './editor/component.js'
 import Layout from './layout/component.js'
 import SlideShow from './slideshow/component.js'
-import { getPresentationsTask } from './presentations/model.js'
+import { getPresentations } from './presentations/model.js'
 import { log } from './services/index.js'
 
 const makeRoutes = mdl => {
@@ -40,7 +40,7 @@ export const App = ({ attrs: model }) => {
   const onSuccess = Models => dto => (Models.Presentations = dto)
 
   const findPresentations = ({ attrs: { Models } }) =>
-    getPresentationsTask().fork(onError, onSuccess(Models))
+    getPresentations().fork(onError, onSuccess(Models))
 
   return {
     oninit: findPresentations,

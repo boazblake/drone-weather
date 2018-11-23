@@ -1,6 +1,10 @@
 import m from 'mithril'
-import { log } from '../../services/index.js'
-import { deleteSlideTask, updateSlideTask } from '../../services/requests.js'
+import { log, makeQuery } from '../../services/index.js'
+import {
+  deleteSlideTask,
+  updateSlideTask,
+  getQlTask,
+} from '../../services/requests.js'
 import {
   animateEntrance,
   animateExit,
@@ -28,15 +32,24 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
       .chain(deleteSlideTask)
       .fork(onError('deleting'), onSuccess)
 
-  const addSlideToShow = s =>
-    updateSlideTask(prop('id', s))(s).fork(onError('updating'), x => {
+  const addSlideToShow = s => {
+    let q = `mutation {
+              updateSlide(id: ${s.id}
+                order: ${s.order})
+                { id
+                  order
+                }
+            }
+            `
+
+    getQlTask(q).fork(onError('updating'), x => {
       state.slideDrag = {
         dragId: '',
         dragging: false,
         droppable: false,
       }
-      onSuccess()
     })
+  }
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
@@ -66,9 +79,6 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
           draggable: true,
           ondragstart: handleDragStart,
           ondragend: handleDragEnd,
-          style: {
-            'background-color': s.isSelected ? '#3498db' : '#95a5a6',
-          },
         },
         [
           m('div.level-left', [

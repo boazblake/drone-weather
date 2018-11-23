@@ -43,18 +43,11 @@ const Slides = ({ attrs: { Models } }) => {
   const onError = log('error')
 
   const onSuccess = presentation => {
-    Models.CurrentPresentation = merge(Models.CurrentPresentation, presentation)
+    let slides = Models.CurrentPresentation.Slides
 
-    state.left(
-      filter(propEq('isSelected', false), Models.CurrentPresentation.slides)
-    )
-    state.right(
-      sortBy(
-        prop('order'),
-        filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
-      )
-    )
-    // console.log('updating slides', Models)
+    state.left(filter(propEq('order', 0), slides))
+
+    state.right(sortBy(prop('order'), without(state.left(), slides)))
   }
 
   const getSlides = ({ attrs: { Models } }) => {
@@ -168,7 +161,6 @@ const Slides = ({ attrs: { Models } }) => {
           })
         ),
       ]),
-      m('pre.pre', JSON.stringify(Models, null, 2)),
     ],
   }
 }

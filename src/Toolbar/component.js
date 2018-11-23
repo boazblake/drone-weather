@@ -16,7 +16,6 @@ const toggleModal = model => {
     m(
       'a.navbar-item',
       {
-        oncreate: m.route.link,
         onclick: () => (model.toggleModal = !model.toggleModal),
       },
       'Add New'

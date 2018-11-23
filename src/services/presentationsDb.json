@@ -47,7 +47,7 @@
       "id": 4,
       "title": "SLIDE 7 elm-node interaction",
       "contents": "# elm - nodejs interaction\n![elm-nodejs-interaction](http://elmprogramming.com/images/elm-architecture/elm-runtime.png)",
-      "isSelected": true,
+      "isSelected": false,
       "order": 0
     },
     {
@@ -55,7 +55,7 @@
       "id": 5,
       "title": "SLIDE 6 virtual dom",
       "contents": "# virtual dom\n![virtual-dom](http://elmprogramming.com/images/virtual-dom/elm-runtime-virtual-dom.png)",
-      "isSelected": true,
+      "isSelected": false,
       "order": 0
     },
     {
@@ -79,7 +79,7 @@
       "id": 8,
       "title": "SLIDE 4 elm runtime",
       "contents": "# elm runtime\n![elm-runtime](http://elmprogramming.com/images/elm-intro/elm-dirty-secret.png)",
-      "isSelected": true,
+      "isSelected": false,
       "order": 0
     },
     {
@@ -95,7 +95,7 @@
       "id": 10,
       "title": "SLIDE 1 defining features & tooling",
       "contents": "# This app was built with\n### `Elm`\n![elm](https://frontendmasters.com/static-assets/workshops/thumbnails/elm.jpg)\n<h1 style=\"text-align:left;\">__&__</h1>\n### `nodejs`\n![nodejs](https://rishabh.io/tech/nodejs/img/nodejs.png)\n\n# NodeJS Tooling\n`yarn : to install dependencies `\n```\n  \"dependencies\": {\n    \"foreman\": \"2.0.0\", // to start up api and client at same time\n    \"json-server\": \"0.9.5\" // quick api mock up\n  }\n```\n## Elm-app-create\nscaffold the app\n\n# Elm specific Tooling\n`elm-app install <package>: to install package`\n```\n   \"dependencies\": {\n    \"NoRedInk/elm-decode-pipeline\": \"3.0.0 <= v < 4.0.0\", //json library \n    \"elm-lang/core\": \"5.0.0 <= v < 6.0.0\", //core lib for elm\n    \"elm-lang/html\": \"2.0.0 <= v < 3.0.0\", //html lib\n    \"elm-lang/http\": \"1.0.0 <= v < 2.0.0\", // http lib\n    \"evancz/elm-markdown\": \"3.0.2 <= v < 4.0.0\", // markdown lib\n    \"krisajenkins/remotedata\": \"4.3.1 <= v < 5.0.0\", // union type for http\n    \"surprisetalk/elm-bulma\": \"5.0.0 <= v < 6.0.0\" // css-bulma for simple styling\n  },\n```",
-      "isSelected": true,
+      "isSelected": false,
       "order": 0
     },
     {
@@ -198,8 +198,8 @@
       "title": "SLIDE 3B",
       "contents": "WHY SO MUCH CONFUSION ?\\n===\\n\\n![kyle simpson](https://images.hanselminutes.com/images/500.jpg)\\n**Kyle Simpson**\\n>  We have spent the better part of 19 years since JS was invented **pretending** that its internal mechanisms are **class based** so we spent all our time trying to syntactictly sugar-coat it instead of realizing that JS internal mechanisms are **linkages not copies**.\\n\\n  https://app.pluralsight.com/player?course=advanced-javascript&author=kyle-simpson&name=advanced-javascript-m4&clip=9&mode=live\\n",
       "id": 23,
-      "isSelected": false,
-      "order": 0,
+      "isSelected": true,
+      "order": 1,
       "presentationId": 4
     },
     {

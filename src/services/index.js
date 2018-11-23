@@ -1,5 +1,7 @@
 import Stream from 'mithril-stream'
 
+const makeQuery = string => JSON.parse(JSON.stringify(string))
+
 const repeat = n => f => x => {
   let m = n
   while (true) {
@@ -31,4 +33,4 @@ const viewModelMap = signature => {
     return _map[key]
   }
 }
-export { viewModelMap, log, repeat, wait }
+export { viewModelMap, log, repeat, wait, makeQuery }

@@ -12,15 +12,8 @@ export const forLess = removeSlide => checkSlide =>
 export const reduceOrder = slide =>
   set(lensProp('order', slide), subtract(orderOf(slide), 1), slide)
 
-const updateIsSelected = slide =>
-  set(lensProp('isSelected', slide), false, slide)
-
 const updateOrder = slide => set(lensProp('order', slide), 0, slide)
 
 export const getId = item => prop('id', item)
 
-export const updateRemoveSlide = compose(
-  Array.of,
-  updateIsSelected,
-  updateOrder
-)
+export const updateRemoveSlide = compose(Array.of, updateOrder)

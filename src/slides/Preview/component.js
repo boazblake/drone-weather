@@ -19,7 +19,7 @@ import {
   animateFadeOut,
 } from '../../services/animations.js'
 import { forLess, forGreater, reduceOrder, updateRemoveSlide } from './model.js'
-import { updateSlideTask } from '../../services/requests.js'
+import { getQlTask } from '../../services/requests.js'
 import marked from 'marked'
 
 import './style.css'
@@ -28,11 +28,23 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
   const onSuccess = _ => getSlides({ attrs: { Models } })
 
-  const updateAndSaveSlideTask = slide =>
-    updateSlideTask(prop('id', slide))(slide).fork(
+  const updateAndSaveSlideTask = slides => {
+    let qlSlides = slides.map(
+      slide => `mutation {
+                updateSlide(id: ${slide.id}
+                  order: ${slide.order})
+                  { id
+                    order
+                  }
+              }
+              `
+    )
+
+    return traverse(Task.of, getQlTask, qlSlides).fork(
       onError('updating'),
       onSuccess
     )
+  }
 
   const removeSlideTask = s => {
     let head = filter(forLess(s), state.right())
@@ -41,14 +53,13 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
     let updateList = concat(removeSlide, tail)
 
-    return traverse(Task.of, updateAndSaveSlideTask, updateList)
+    updateAndSaveSlideTask(updateList)
   }
 
   const handleDragStart = ev => {
     ev.target.style.opacity = '0.4'
     ev.dataTransfer.effectAllowed = 'move'
     ev.dataTransfer.setData('text/plain', 'preview')
-    s.isSelected = true //some reason s.isSelected is still false at this point
     state.previewDrag.drag = s
   }
 
@@ -80,9 +91,9 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
       if (!eqProps('id', dragged, dropped)) {
         dragged.order = end
         dropped.order = start
-        updateSlideTask(dragged.id)(dragged)
-          .chain(_ => updateSlideTask(dropped.id)(dropped))
-          .fork(onError('updating'), onSuccess)
+
+        updateAndSaveSlideTask([dragged, dropped])
+        // .fork(onError('updating'), onSuccess)
       }
     }
   }
@@ -90,8 +101,9 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   return {
     oncreate: ({ dom }) => animateFadeIn({ dom }),
     onBeforeRemove: ({ dom }) => animateExit({ dom }),
-    view: () =>
-      m(
+    view: ({ attrs: { getSlides, Models, s, key, state } }) => {
+      console.log(s.order)
+      return m(
         'section.box',
         {
           draggable: true,
@@ -169,7 +181,8 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
             [m.trust(marked(s.contents))]
           ),
         ]
-      ),
+      )
+    },
   }
 }
 

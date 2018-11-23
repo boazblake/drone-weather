@@ -24,15 +24,19 @@
     "bulma": "^0.7.2",
     "data.task": "^3.1.2",
     "feather-icons": "^4.9.0",
+    "json-graphql-server": "^2.1.2",
+    "json-server-extension": "^1.1.2",
     "marked": "^0.5.1",
     "mithril": "^2.0.0-rc.1",
     "mithril-stream": "^1.1.0",
     "ramda": "^0.25.0",
-    "sortablejs": "^1.7.0"
+    "sortablejs": "^1.7.0",
+    "stacktrace-js": "^2.0.0"
   },
   "scripts": {
-    "start": "yarn db & yarn web",
-    "db": "json-server --watch src/services/presentationsDB.json",
+    "start": "yarn jsonQl & yarn web",
+    "jsonServer": "json-graphql-server db.js",
+    "jsonQl": "json-graphql-server db.js",
     "web": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js"
   }
