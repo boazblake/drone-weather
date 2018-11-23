@@ -19,7 +19,7 @@ const Presentation = ({ attrs: { title, id, model } }) => {
       .fork(onError('deleting'), onSuccess)
 
   return {
-    view: () =>
+    view: ({ attrs: { title, id, model } }) =>
       m('section.level box', [
         m('div.level-left', [
           m(

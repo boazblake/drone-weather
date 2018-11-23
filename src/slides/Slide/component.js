@@ -71,7 +71,7 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   return {
     oncreate: ({ dom }) => animateFadeIn({ dom }),
     onBeforeRemove: ({ dom }) => animateFadeOut({ dom }),
-    view: () =>
+    view: ({ attrs: { getSlides, Models, s, key, state } }) =>
       m(
         'section.level box',
         {

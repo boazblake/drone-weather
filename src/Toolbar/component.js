@@ -96,7 +96,7 @@ const actionView = model => page => {
 const Toolbar = ({ attrs: { Models } }) => {
   const currentPage = view(lensProp(1), split('/', m.route.get()))
   return {
-    view: () =>
+    view: ({ attrs: { Models } }) =>
       m(
         'nav.navbar is-white',
         m('.navbar-menu is-active', [

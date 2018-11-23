@@ -1,56 +1,56 @@
-import m from "mithril";
-import { assoc } from "ramda";
-import { saveSlideTask } from "../services/requests.js";
+import m from 'mithril'
+import { assoc } from 'ramda'
+import { saveSlideTask } from '../services/requests.js'
 
 const SlidesModal = ({ attrs }) => {
   const state = {
-    errors: "",
-    title: "",
-  };
+    errors: '',
+    title: '',
+  }
 
   const onError = errors => {
-    log("error")(errors);
-    state.errors = errors;
-  };
+    log('error')(errors)
+    state.errors = errors
+  }
 
   const onSuccess = slide => {
-    attrs.slides.push(slide);
-    attrs.toggleModal();
-  };
+    attrs.slides.push(slide)
+    attrs.toggleModal()
+  }
 
   const save = e => {
-    e.preventDefault();
+    e.preventDefault()
     let dto = assoc(
-      "presentationId",
+      'presentation_id',
       attrs.pId,
-      assoc("title", state.title, attrs.slide)
-    );
-    saveSlideTask(dto).fork(onError, onSuccess);
-  };
+      assoc('title', state.title, attrs.slide)
+    )
+    saveSlideTask(dto).fork(onError, onSuccess)
+  }
 
   return {
     view: () =>
-      m(".modal", [
-        m(".modal-background"),
-        m(".modal-content", [
-          m("fieldset.fieldset", [
-            m("legend.legend", "Add a Slide"),
-            m("label.label", "Slide title"),
-            m("input.input", {
-              type: "text",
-              onchange: m.withAttr("value", v => (state.title = v)),
+      m('.modal', [
+        m('.modal-background'),
+        m('.modal-content', [
+          m('fieldset.fieldset', [
+            m('legend.legend', 'Add a Slide'),
+            m('label.label', 'Slide title'),
+            m('input.input', {
+              type: 'text',
+              onchange: m.withAttr('value', v => (state.title = v)),
             }),
-            m("button.button", { onclick: save }, "Create Slide"),
+            m('button.button', { onclick: save }, 'Create Slide'),
           ]),
         ]),
-        m("button.modal-close is-large", {
+        m('button.modal-close is-large', {
           onclick: () => {
-            return attrs.toggleModal();
+            return attrs.toggleModal()
           },
-          "aria-label": "close",
+          'aria-label': 'close',
         }),
       ]),
-  };
-};
+  }
+}
 
-export default SlidesModal;
+export default SlidesModal

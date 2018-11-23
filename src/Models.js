@@ -8,7 +8,7 @@ const SlideModel = {
   id: '',
   isSelected: false,
   order: 0,
-  presentationId: '',
+  presentation_id: '',
 }
 
 const PresentationModel = {

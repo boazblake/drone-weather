@@ -101,9 +101,8 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   return {
     oncreate: ({ dom }) => animateFadeIn({ dom }),
     onBeforeRemove: ({ dom }) => animateExit({ dom }),
-    view: ({ attrs: { getSlides, Models, s, key, state } }) => {
-      console.log(s.order)
-      return m(
+    view: ({ attrs: { getSlides, Models, s, key, state } }) =>
+      m(
         'section.box',
         {
           draggable: true,
@@ -181,8 +180,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
             [m.trust(marked(s.contents))]
           ),
         ]
-      )
-    },
+      ),
   }
 }
 

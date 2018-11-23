@@ -1,15 +1,14 @@
 import m from 'mithril'
 import Stream from 'mithril-stream'
 import marked from 'marked'
-import { loadSlide } from './model.js'
+import { loadSlide, saveSlide } from './model.js'
 import { log } from '../services/index.js'
-import { updateSlideTask } from '../services/requests.js'
 
 const Editor = ({ attrs: Models }) => {
   let state = { slide: { title: '', contents: '' } }
 
   const toSlides = _ =>
-    m.route.set(`/presentation/${state.slide.presentationId}/slides`)
+    m.route.set(`/presentation/${state.slide.presentation_id}/slides`)
 
   const onError = error => log('error')(error)
 
@@ -27,7 +26,8 @@ const Editor = ({ attrs: Models }) => {
 
   const save = e => {
     e.preventDefault()
-    updateSlideTask(state.slide.id)(state.slide).fork(onError, toSlides())
+
+    saveSlide(state.slide).fork(onError, () => toSlides())
   }
 
   return {
