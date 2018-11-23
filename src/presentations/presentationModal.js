@@ -1,35 +1,36 @@
 import m from 'mithril'
-import { toPresentationDtoTask } from './model.js'
+import { savePresentationTask } from './model.js'
 import { log } from '../services/index.js'
 
 const PresentationModal = ({ attrs }) => {
   const state = {
     errors: '',
     title: '',
+    id: '',
   }
   const onError = errors => {
     log('error')(errors)
     state.errors = errors
   }
-  const onSuccess = presentation => {
-    attrs.presentations.push(presentation)
+  const onSuccess = p => {
+    m.redraw()
+    console.log(p)
+    // attrs.presentations.push(p)
     attrs.toggleModal()
   }
 
   const save = e => {
     e.preventDefault()
-    toPresentationDtoTask(state.title)(attrs.presentationModel).fork(
-      onError,
-      onSuccess
-    )
+    state.id = attrs.presentations.length + 1
+    savePresentationTask(state).fork(onError, onSuccess)
   }
 
   return {
     view: () =>
-      m('article.modal', [
+      m('article.modal is-active', [
         m('.modal-background'),
         m('.modal-content', [
-          m('fieldset.fieldset', [
+          m('fieldset.fieldset hero', [
             m('legend.legend', 'Add a Presentation'),
             m('label.label', 'Presentation Name'),
             m('input.input', {

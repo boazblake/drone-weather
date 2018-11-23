@@ -1,11 +1,6 @@
 import m from 'mithril'
 import { log, makeQuery } from '../../services/index.js'
 import {
-  deleteSlideTask,
-  updateSlideTask,
-  getQlTask,
-} from '../../services/requests.js'
-import {
   animateEntrance,
   animateExit,
   animateFadeIn,
@@ -18,6 +13,8 @@ import {
   updateSlideDragStart,
   updateSlideDragEnd,
   updateStateDragEnd,
+  saveSlideToShowTask,
+  deleteSlideTask,
 } from './model.js'
 
 const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
@@ -33,16 +30,7 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
       .fork(onError('deleting'), onSuccess)
 
   const addSlideToShow = s => {
-    let q = `mutation {
-              updateSlide(id: ${s.id}
-                order: ${s.order})
-                { id
-                  order
-                }
-            }
-            `
-
-    getQlTask(q).fork(onError('updating'), x => {
+    saveSlideToShowTask(s).fork(onError('updating'), x => {
       state.slideDrag = {
         dragId: '',
         dragging: false,

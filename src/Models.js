@@ -5,14 +5,8 @@ import { filter } from 'ramda'
 const SlideModel = {
   title: '',
   contents: '',
-  id: '',
   order: 0,
   presentation_id: '',
-}
-
-const PresentationModel = {
-  id: '',
-  title: '',
 }
 
 const Slides = []
@@ -28,7 +22,6 @@ const CurrentPresentation = {
 const Models = {
   Presentations,
   CurrentPresentation,
-  PresentationModel,
   SlideModel,
   toggleModal: false,
 }

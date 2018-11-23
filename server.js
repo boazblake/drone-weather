@@ -1,7 +1,11 @@
 const jsonServer = require('json-server')
+const jsonGraphqlExpress = require('json-graphql-server')
+const data = require('./db.json')
 const server = jsonServer.create()
-const router = jsonServer.router('./src/services/presentationsDb.json')
+const router = jsonServer.router('./db.js')
 const middlewares = jsonServer.defaults()
+
+app.use('/graphql', jsonGraphqlExpress(data))
 
 // Set default middlewares (logger, static, cors and no-cache)
 server.use(middlewares)

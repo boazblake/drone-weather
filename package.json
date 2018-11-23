@@ -35,7 +35,6 @@
   },
   "scripts": {
     "start": "yarn jsonQl & yarn web",
-    "jsonServer": "json-graphql-server db.js",
     "jsonQl": "json-graphql-server db.js",
     "web": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js"

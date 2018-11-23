@@ -1,21 +1,16 @@
-import {
-  savePresentationTask,
-  findPresentationsTask,
-  getQlTask,
-} from '../services/requests.js'
-import { compose, path, assoc, map, pick } from 'ramda'
+import { getQlTask } from '../services/requests.js'
+import { compose, path } from 'ramda'
 
-import { makeQuery } from '../services/index.js'
-
-const toViewModel = compose(path(['data', 'allPresentations']))
-
-// export const getPresentationsTask = () =>
-//   findPresentationsTask().map(map(toViewModel))
-//
-// export const toPresentationDtoTask = title => model => {
-//   let p = assoc('title', title, model)
-//   return savePresentationTask(p)
-// }
+import { log } from '../services/index.js'
 
 export const getPresentations = () =>
-  getQlTask(`{ allPresentations { id title} }`).map(toViewModel)
+  getQlTask(`{ allPresentations { id title} }`).map(
+    path(['data', 'allPresentations'])
+  )
+
+export const savePresentationTask = state => {
+  const q = `mutation { createPresentation(id: ${
+    state.id
+  } title: ${JSON.stringify(state.title)}) { id title} }`
+  return getQlTask(q).map(path(['data', 'createPresentation']))
+}

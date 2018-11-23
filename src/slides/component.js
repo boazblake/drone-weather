@@ -2,7 +2,6 @@ import m from 'mithril'
 import Stream from 'mithril-stream'
 import {
   clone,
-  merge,
   filter,
   propEq,
   prop,

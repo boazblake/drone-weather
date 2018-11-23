@@ -1,3 +1,5 @@
+import { getQlTask } from '../../services/requests.js'
+
 import { compose, set, lensProp, prop } from 'ramda'
 
 const updateId = slide => slideDrag =>
@@ -14,3 +16,25 @@ const updateDrag = state => set(lensProp('dragging', false, state))
 const updateDrop = state => set(lensProp('droppable', false, state))
 
 export const updateStateDragEnd = compose(updateDrop, updateDrag)
+
+export const saveSlideToShowTask = slide => {
+  let q = `mutation {
+            updateSlide(id: ${slide.id}
+              order: ${slide.order})
+              { id
+                order
+              }
+          }
+          `
+
+  return getQlTask(q)
+}
+
+export const deleteSlideTask = id => {
+  let q = `mutation {
+            deleteSlide(id: ${id})
+          }
+          `
+
+  return getQlTask(q)
+}
