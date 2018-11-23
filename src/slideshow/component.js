@@ -1,7 +1,7 @@
 import m from 'mithril'
 import Stream from 'mithril-stream'
 import marked from 'marked'
-import { filter, propEq, prop, sortBy } from 'ramda'
+import { where, propEq, prop, sortBy, gte, pluck } from 'ramda'
 import { log } from '../services/index.js'
 import {
   animateEntrance,
@@ -38,13 +38,8 @@ const SlideShow = ({ attrs: { Models } }) => {
   }
 
   const loadSlideShow = ({ attrs: { Models } }) => {
-    Models.CurrentPresentation.slideShow = sortBy(
-      prop('order'),
-      filter(propEq('isSelected', true), Models.CurrentPresentation.slides)
-    ).map(prop('contents'))
-
-    state.size = Models.CurrentPresentation.slideShow.length - 1
-    state.contents = Models.CurrentPresentation.slideShow
+    state.size = Models.CurrentPresentation.slideShow().length - 1
+    state.contents = pluck('contents', Models.CurrentPresentation.slideShow())
     state.slide = state.contents[state.cursor]
   }
 

@@ -48,6 +48,8 @@ const Slides = ({ attrs: { Models } }) => {
     state.left(filter(propEq('order', 0), slides))
 
     state.right(sortBy(prop('order'), without(state.left(), slides)))
+
+    Models.CurrentPresentation.slideShow = Stream(state.right())
   }
 
   const getSlides = ({ attrs: { Models } }) => {

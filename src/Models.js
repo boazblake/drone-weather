@@ -6,7 +6,6 @@ const SlideModel = {
   title: '',
   contents: '',
   id: '',
-  isSelected: false,
   order: 0,
   presentation_id: '',
 }
@@ -16,15 +15,16 @@ const PresentationModel = {
   title: '',
 }
 
-const CurrentPresentation = {
-  title: '',
-  id: '',
-  slides: [],
-  slideShow: [],
-}
+const Slides = []
 
 const Presentations = []
 
+const CurrentPresentation = {
+  title: '',
+  id: '',
+  slideShow: Stream([]),
+  Slides,
+}
 const Models = {
   Presentations,
   CurrentPresentation,
