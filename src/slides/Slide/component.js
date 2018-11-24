@@ -1,4 +1,5 @@
 import m from 'mithril'
+import Task from 'data.task'
 import { log, makeQuery } from '../../services/index.js'
 import {
   animateEntrance,
@@ -15,18 +16,20 @@ import {
   updateStateDragEnd,
   saveSlideToShowTask,
   deleteSlideTask,
-} from './model.js'
+} from '../model.js'
 
 const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onError = task => error => log(`error with ${task}`)(error)
   const onSuccess = _ => getSlides({ attrs: { Models } })
 
   const authDeleteTask = id =>
-    alert('Are you sure you want to delete?') ? Task.of(id) : Task.rejected(id)
+    window.confirm('Are you sure you want to delete?')
+      ? Task.of(id)
+      : Task.rejected(id)
 
   const removeSlideTask = id =>
     authDeleteTask(id)
-      .chain(deleteSlideTask)
+      .chain(deleteSlideTask(Models.CurrentPresentation.id))
       .fork(onError('deleting'), onSuccess)
 
   const addSlideToShow = s => {

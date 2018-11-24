@@ -37,6 +37,7 @@ const Slides = ({ attrs: { Models } }) => {
       drag: null,
       drop: null,
     },
+    presentationId: '',
   }
 
   const onError = log('error')
@@ -104,7 +105,7 @@ const Slides = ({ attrs: { Models } }) => {
       Models.toggleModal
         ? m(SlidesModal, {
             toggleModal: () => (Models.toggleModal = !Models.toggleModal),
-            slides: Models.CurrentPresentation.slides,
+            left: state.left,
             slide: clone(Models.SlideModel),
             pId: Models.CurrentPresentation.id,
           })

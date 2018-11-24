@@ -1,8 +1,8 @@
 import m from 'mithril'
 import { assoc } from 'ramda'
-import { saveSlideTask } from '../services/requests.js'
+import { saveSlideTask } from './model.js'
 
-const SlidesModal = ({ attrs }) => {
+const SlidesModal = ({ attrs: { left, pId, slide, toggleModal } }) => {
   const state = {
     errors: '',
     title: '',
@@ -13,24 +13,20 @@ const SlidesModal = ({ attrs }) => {
     state.errors = errors
   }
 
-  const onSuccess = slide => {
-    attrs.slides.push(slide)
-    attrs.toggleModal()
+  const onSuccess = slides => {
+    left(slides)
+    return toggleModal()
   }
 
   const save = e => {
     e.preventDefault()
-    let dto = assoc(
-      'presentation_id',
-      attrs.pId,
-      assoc('title', state.title, attrs.slide)
-    )
+    let dto = assoc('presentation_id', pId, assoc('title', state.title, slide))
     saveSlideTask(dto).fork(onError, onSuccess)
   }
 
   return {
     view: () =>
-      m('.modal', [
+      m('.modal is-active', [
         m('.modal-background'),
         m('.modal-content', [
           m('fieldset.fieldset', [
@@ -45,7 +41,7 @@ const SlidesModal = ({ attrs }) => {
         ]),
         m('button.modal-close is-large', {
           onclick: () => {
-            return attrs.toggleModal()
+            return toggleModal()
           },
           'aria-label': 'close',
         }),
