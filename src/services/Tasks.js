@@ -2,8 +2,7 @@ import m from 'mithril'
 import Task from 'data.task'
 import { makeQuery } from './index.js'
 
-const baseUrl = 'http://localhost:3000/'
-const online = 'https://jsonplaceholder.typicode.com'
+const baseUrl = 'http://localhost:4466/'
 
 export const postQl = query =>
   new Task((rej, res) =>

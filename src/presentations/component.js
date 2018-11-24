@@ -13,10 +13,17 @@ import Presentation from './Presentation/component.js'
 import './style.css'
 
 const Presentations = ({ attrs: { Models } }) => {
+  const state = {
+    errors: [],
+    title: '',
+  }
+
   return {
     view: ({ attrs: { Models } }) => [
       Models.toggleModal
         ? m(PresentationModal, {
+            Models,
+            state,
             toggleModal: () => (Models.toggleModal = !Models.toggleModal),
             presentations: Models.Presentations,
             presentationModel: clone(Models.PresentationModel),
@@ -45,6 +52,14 @@ const Presentations = ({ attrs: { Models } }) => {
               })
             ),
         ]
+      ),
+      m(
+        'section.section column is-6',
+        state.errors
+          ? state.errors.map(error =>
+              m('pre.pre', JSON.stringify(error, null, 2))
+            )
+          : ''
       ),
     ],
   }
