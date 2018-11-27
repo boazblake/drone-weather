@@ -83,7 +83,7 @@ const SlideShow = ({ attrs: { Models } }) => {
                       margin: 0,
                     },
                     onupdate: ({ dom }) => animateFadeIn({ dom }),
-                    oncreate: ({ dom }) => animateFadeIn({ dom }),
+                    oncreate: ({ dom }) => animateEntrance({ dom }),
                     onBeforeRemove: ({ dom }) => animateExit({ dom }),
                     style: {
                       height: '80vh',
@@ -92,11 +92,7 @@ const SlideShow = ({ attrs: { Models } }) => {
                       'align-contents': 'center',
                     },
                   },
-                  m.trust(
-                    marked(
-                      JSON.stringify(state.contents[state.cursor] || '~ FIN ~')
-                    )
-                  )
+                  m.trust(marked(state.contents[state.cursor] || '~ FIN ~'))
                 ),
               ]
             ),
