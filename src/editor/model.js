@@ -1,22 +1,29 @@
 import { getQlTask } from '../services/requests.js'
+import { makeQuery } from '../services/index.js'
 import { path } from 'ramda'
 
 export const loadSlide = id => {
-  const q = `{Slide(id: ${id}) { title, contents, id, presentation_id}}`
-  return getQlTask(q).map(path(['data', 'Slide']))
+  let q = `{ slide(where:{id:${JSON.stringify(id)}}){
+              id content title
+            }
+          }`
+  return getQlTask(q).map(path(['data', 'slide']))
 }
 
-export const saveSlide = slide => {
-  const q = `mutation {
-            updateSlide(id: ${slide.id}
-                        title: ${JSON.stringify(slide.title)}
-                        contents: ${JSON.stringify(slide.contents)}
-                      )
-              { id
-                title
-                contents
+export const editSlide = ({ id, title, content }) => {
+  let q = `mutation {
+            updateSlide(
+              data: {
+                title: ${JSON.stringify(title)}
+                content: ${JSON.stringify(content)}
               }
-          }
-          `
-  return getQlTask(q).map(path(['data', 'updateSlide']))
+              where: {
+                id: ${JSON.stringify(id)}
+              }) {
+                id
+                title
+              }
+        }`
+
+  return getQlTask(q).map(path(['data', 'updatePresentation', 'Slides']))
 }

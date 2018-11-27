@@ -13,6 +13,12 @@ const Slides = []
 
 const Presentations = []
 
+const SlideShowStruct = {
+  keys: new Set(),
+  values: {},
+  items: Stream([]),
+}
+
 const CurrentPresentation = {
   title: '',
   id: '',
@@ -20,6 +26,7 @@ const CurrentPresentation = {
   Slides,
 }
 const Models = {
+  SlideShowStruct,
   Presentations,
   CurrentPresentation,
   SlideModel,

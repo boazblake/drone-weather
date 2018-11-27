@@ -18,7 +18,7 @@ const makeRoutes = mdl => {
     '/presentation/:id/slides': {
       view: () => m(Layout, model(), m(Slides, model())),
     },
-    '/edit/slide/:id': {
+    '/edit/:pid/slide/:id': {
       view: () => m(Layout, model(), m(Editor, model())),
     },
     '/slideshow/:id': {

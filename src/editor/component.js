@@ -1,14 +1,14 @@
 import m from 'mithril'
 import Stream from 'mithril-stream'
 import marked from 'marked'
-import { loadSlide, saveSlide } from './model.js'
+import { loadSlide, editSlide } from './model.js'
 import { log } from '../services/index.js'
 
 const Editor = ({ attrs: Models }) => {
-  let state = { slide: { title: '', contents: '' } }
+  let state = { presentationId: '', slide: { title: '', content: '', id: '' } }
 
   const toSlides = _ =>
-    m.route.set(`/presentation/${state.slide.presentation_id}/slides`)
+    m.route.set(`/presentation/${state.presentationId}/slides`)
 
   const onError = error => log('error')(error)
 
@@ -17,17 +17,18 @@ const Editor = ({ attrs: Models }) => {
   }
 
   const getSlide = ({ attrs: { Models } }) => {
-    let slideId = m.route.param('id')
-    return loadSlide(slideId).fork(onError, onSuccess)
+    state.slide.id = m.route.param('id')
+    state.presentationId = m.route.param('pid')
+    return loadSlide(state.slide.id).fork(onError, onSuccess)
   }
 
   const updateTitle = text => (state.slide.title = text)
-  const updateContents = text => (state.slide.contents = text)
+  const updateContents = text => (state.slide.content = text)
 
   const save = e => {
     e.preventDefault()
 
-    saveSlide(state.slide).fork(onError, () => toSlides())
+    editSlide(state.slide).fork(onError, () => toSlides())
   }
 
   return {
@@ -50,7 +51,7 @@ const Editor = ({ attrs: Models }) => {
               m('p', [
                 m('textarea.textarea', {
                   oninput: m.withAttr('value', updateContents),
-                  value: state.slide.contents,
+                  value: state.slide.content,
                   style: { height: '45vh' },
                 }),
               ]),
@@ -91,7 +92,7 @@ const Editor = ({ attrs: Models }) => {
               {
                 style: { height: '60vh', overflow: 'scroll' },
               },
-              m.trust(marked(state.slide.contents || ''))
+              m.trust(marked(state.slide.content || ''))
             ),
           ]),
         ]),

@@ -9,6 +9,8 @@ import {
   filter,
   map,
   prop,
+  propEq,
+  head,
   reverse,
 } from 'ramda'
 import { log } from '../../services/index.js'
@@ -18,7 +20,13 @@ import {
   animateFadeIn,
   animateFadeOut,
 } from '../../services/animations.js'
-import { forLess, forGreater, reduceOrder, updateRemoveSlide } from './model.js'
+import {
+  forLess,
+  forGreater,
+  reduceOrder,
+  updateRemoveSlide,
+  updateSlideTask,
+} from '../model.js'
 import { getQlTask } from '../../services/requests.js'
 import marked from 'marked'
 
@@ -29,18 +37,7 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   const onSuccess = _ => getSlides({ attrs: { Models } })
 
   const updateAndSaveSlideTask = slides => {
-    let qlSlides = slides.map(
-      slide => `mutation {
-                updateSlide(id: ${slide.id}
-                  order: ${slide.order})
-                  { id
-                    order
-                  }
-              }
-              `
-    )
-
-    return traverse(Task.of, getQlTask, qlSlides).fork(
+    return updateSlideTask(Models.CurrentPresentation.id)(slides).fork(
       onError('updating'),
       onSuccess
     )
@@ -57,14 +54,17 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   }
 
   const handleDragStart = ev => {
+    // ev.preventDefault()
     ev.target.style.opacity = '0.4'
     ev.dataTransfer.effectAllowed = 'move'
     ev.dataTransfer.setData('text/plain', 'preview')
-    state.previewDrag.drag = s
+    state.previewDrag.drag = head(filter(propEq('id', s.id), state.right()))
   }
 
   const handleDragOver = ev => {
     ev.preventDefault()
+    // return console.log('over previewDrag', state.previewDrag)
+
     if (state.previewDrag.drag) state.previewDrag.drop = s
   }
 
@@ -93,7 +93,6 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
         dropped.order = start
 
         updateAndSaveSlideTask([dragged, dropped])
-        // .fork(onError('updating'), onSuccess)
       }
     }
   }
@@ -101,8 +100,8 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
   return {
     oncreate: ({ dom }) => animateFadeIn({ dom }),
     onBeforeRemove: ({ dom }) => animateExit({ dom }),
-    view: ({ attrs: { getSlides, Models, s, key, state } }) =>
-      m(
+    view: ({ attrs: { getSlides, Models, s, key, state } }) => {
+      return m(
         'section.box',
         {
           draggable: true,
@@ -117,10 +116,10 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
             width: '200px',
             height: '200px',
             margin: '12px',
-            // opacity:
-            //   state.previewDrag.drop && state.previewDrag.drop.id == s.id
-            //     ? 0.4
-            //     : 1,
+            opacity:
+              state.previewDrag.drop && state.previewDrag.drop.id == s.id
+                ? 0.4
+                : 1,
           },
         },
         [
@@ -177,10 +176,11 @@ const Preview = ({ attrs: { getSlides, Models, s, key, state } }) => {
           m(
             'article.article',
             { style: { position: 'relative', top: '-155px', 'z-index': 0 } },
-            [m.trust(marked(s.contents))]
+            [m.trust(marked(s.content))]
           ),
         ]
-      ),
+      )
+    },
   }
 }
 

@@ -1,6 +1,7 @@
 import m from 'mithril'
 import Stream from 'mithril-stream'
 import {
+  map,
   clone,
   filter,
   propEq,
@@ -16,6 +17,7 @@ import {
   animateFadeOut,
   animateFadeIn,
 } from '../services/animations.js'
+import List from '../services/lists/index.js'
 import SlidesModal from './slidesModal.js'
 import Slide from './Slide/component.js'
 import Preview from './Preview/component.js'
@@ -53,11 +55,8 @@ const Slides = ({ attrs: { Models } }) => {
   }
 
   const getSlides = ({ attrs: { Models } }) => {
-    Models.CurrentPresentation.id = m.route.param('id')
-    return loadSlides(Models.CurrentPresentation.id)(Models).fork(
-      onError,
-      onSuccess
-    )
+    state.presentationId = m.route.param('id')
+    return loadSlides(state.presentationId)(Models).fork(onError, onSuccess)
   }
 
   const handleDragEnter = ev => {
@@ -80,8 +79,8 @@ const Slides = ({ attrs: { Models } }) => {
         let item = head(
           filter(propEq('id', state.slideDrag.dragId), state.left())
         )
-        item.order = state.right().length + 1
         state.slideDrag.droppable = true
+        item.order = state.right().length + 1
         state.left(without([item], state.left()))
         state.right(concat(state.right(), [item]))
       } else {
@@ -107,7 +106,7 @@ const Slides = ({ attrs: { Models } }) => {
             toggleModal: () => (Models.toggleModal = !Models.toggleModal),
             left: state.left,
             slide: clone(Models.SlideModel),
-            pId: Models.CurrentPresentation.id,
+            pId: state.presentationId,
           })
         : '',
       m('section.section', [

@@ -3,13 +3,15 @@ import Task from 'data.task'
 import { makeQuery } from './index.js'
 
 const baseUrl = 'http://localhost:4466/'
+const onlineUrl =
+  'https://eu1.prisma.sh/boaz-blake-8951e1/mithril-presenter/dev'
 
 export const postQl = query =>
   new Task((rej, res) =>
     m
       .request({
         method: 'POST',
-        url: `${baseUrl}`,
+        url: `${onlineUrl}`,
         withCredentials: false,
         data: makeQuery(query),
         headers: { 'Content-Type': 'application/json' },
@@ -22,7 +24,7 @@ const postTask = url => ({ dto }) =>
     m
       .request({
         method: 'POST',
-        url: `${baseUrl}/${url}`,
+        url: `${onlineUrl}/${url}`,
         data: dto,
         withCredentials: false,
         headers: { 'Content-Type': 'application/json' },
@@ -35,7 +37,7 @@ const putTask = url => ({ dto }) =>
     m
       .request({
         method: 'PUT',
-        url: `${baseUrl}/${url}`,
+        url: `${onlineUrl}/${url}`,
         data: dto,
         withCredentials: false,
         headers: { 'Content-Type': 'application/json' },
@@ -48,7 +50,7 @@ const getTask = url =>
     m
       .request({
         method: 'GET',
-        url: `${baseUrl}/${url}`,
+        url: `${onlineUrl}/${url}`,
         withCredentials: false,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -60,7 +62,7 @@ const deleteTask = url => id =>
     m
       .request({
         method: 'DELETE',
-        url: `${baseUrl}/${url}/${id}`,
+        url: `${onlineUrl}/${url}/${id}`,
         withCredentials: false,
         headers: { 'Content-Type': 'application/json' },
       })

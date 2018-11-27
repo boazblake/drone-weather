@@ -13,30 +13,31 @@ import {
 const SlideShow = ({ attrs: { Models } }) => {
   const state = {
     cursor: 0,
-    isFullscreen: '%',
+    isFullscreenWidth: 'vh',
+    isFullscreenHeight: '%',
     clicks: 0,
     size: Models.CurrentPresentation.slideShow().length,
-    contents: pluck('contents', Models.CurrentPresentation.slideShow()),
+    contents: pluck('content', Models.CurrentPresentation.slideShow()),
   }
 
-  const makeFullScreen = () => {
-    state.clicks = 0
-    state.isFullscreen = '%'
-  }
-  const makeSmallScreen = () => {
-    state.clicks = 0
-    state.isFullscreen = 'vh'
-  }
-
-  const doubleClick = e => {
-    e.preventDefault()
-    state.clicks++
-    setTimeout(() => {
-      log('set time out runnign')(state.clicks)
-      state.clicks <= 1 ? makeSmallScreen() : makeFullScreen()
-    }, 500)
-    console.log(state)
-  }
+  marked.setOptions({
+    baseUrl: null,
+    breaks: false,
+    gfm: true,
+    headerIds: true,
+    headerPrefix: '',
+    highlight: null,
+    langPrefix: 'language-js',
+    mangle: true,
+    pedantic: false,
+    sanitize: true,
+    sanitizer: null,
+    silent: true,
+    smartLists: true,
+    smartypants: true,
+    tables: true,
+    xhtml: true,
+  })
 
   const nextSlide = () => (state.cursor == state.size ? '' : state.cursor++)
 
@@ -59,6 +60,9 @@ const SlideShow = ({ attrs: { Models } }) => {
       return m(
         '. container',
         {
+          style: {
+            width: `100%`,
+          },
           tabindex: 0,
           onkeyup: ({ key }) => {
             changeSlide(key)
@@ -74,22 +78,24 @@ const SlideShow = ({ attrs: { Models } }) => {
                   '.box',
                   {
                     style: {
-                      width: `100${state.isFullscreen}`,
-                      height: `100${state.isFullscreen}`,
+                      width: `100%`,
+                      height: `100vh`,
                       margin: 0,
                     },
                     onupdate: ({ dom }) => animateFadeIn({ dom }),
                     oncreate: ({ dom }) => animateFadeIn({ dom }),
                     onBeforeRemove: ({ dom }) => animateExit({ dom }),
-                    onclick: doubleClick,
                     style: {
                       height: '80vh',
-                      width: `100${state.isFullscreen}`,
+                      width: `100%`,
                       overflow: 'scroll',
+                      'align-contents': 'center',
                     },
                   },
                   m.trust(
-                    marked(state.contents[state.cursor] || 'No Slides Added')
+                    marked(
+                      JSON.stringify(state.contents[state.cursor] || '~ FIN ~')
+                    )
                   )
                 ),
               ]

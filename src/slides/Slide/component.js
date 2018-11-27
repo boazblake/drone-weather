@@ -14,7 +14,7 @@ import {
   updateSlideDragStart,
   updateSlideDragEnd,
   updateStateDragEnd,
-  saveSlideToShowTask,
+  updateSlideTask,
   deleteSlideTask,
 } from '../model.js'
 
@@ -29,16 +29,17 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
 
   const removeSlideTask = id =>
     authDeleteTask(id)
-      .chain(deleteSlideTask(Models.CurrentPresentation.id))
+      .chain(deleteSlideTask(state.presentationId))
       .fork(onError('deleting'), onSuccess)
 
   const addSlideToShow = s => {
-    saveSlideToShowTask(s).fork(onError('updating'), x => {
+    updateSlideTask(state.presentationId)([s]).fork(onError('updating'), _ => {
       state.slideDrag = {
         dragId: '',
         dragging: false,
         droppable: false,
       }
+      onSuccess()
     })
   }
 
@@ -76,7 +77,8 @@ const Slide = ({ attrs: { getSlides, Models, s, key, state } }) => {
             m(
               'a.button',
               {
-                onclick: () => m.route.set(`/edit/slide/${s.id}`),
+                onclick: () =>
+                  m.route.set(`/edit/${state.presentationId}/slide/${s.id}`),
               },
               [
                 m('span', take(15, s.title)),
