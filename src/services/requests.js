@@ -1,29 +1,18 @@
-import httpTasks from './Tasks.js'
-import Task from 'data.task'
-import { sequence } from 'ramda'
+import m from "mithril";
+import Task from "data.task";
 
-import { log } from './index.js'
+const baseUrl = "https://react-assessment-api.herokuapp.com/api";
 
-export const findPresentationsTask = () => httpTasks.getTask('presentations')
+const getTask = url =>
+  new Task((rej, res) =>
+    m
+      .request({
+        method: "GET",
+        url: `${baseUrl}/${url}`,
+        withCredentials: false,
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(res, rej)
+  );
 
-export const getQlTask = query => httpTasks.postQl({ query })
-
-export const savePresentationTask = dto =>
-  httpTasks.postTask(`presentations`)({
-    dto,
-  })
-
-export const deletePresentationsTask = id =>
-  httpTasks.deleteTask('presentations')(id)
-
-export const findSlidesTask = id =>
-  httpTasks.getTask(`presentations/${id}/slides`)
-
-export const saveSlideTask = dto => httpTasks.postTask(`slides`)({ dto })
-
-export const updateSlideTask = id => dto =>
-  httpTasks.putTask(`slides/${id}`)({ dto })
-
-export const deleteSlideTask = id => httpTasks.deleteTask('slides')(id)
-
-export const loadSlideTask = id => httpTasks.getTask(`slides/${id}`)
+export const droneDataTask = () => getTask("drone");

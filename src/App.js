@@ -1,58 +1,24 @@
-import m from 'mithril'
-import Stream from 'mithril-stream'
+import m from "mithril";
+import Layout from "./layout/component.js";
+import Models from "./Models.js";
+import Drone from "./Drone/component.js";
 
-import Presentations from './presentations/component.js'
-import Slides from './slides/component.js'
-import Editor from './editor/component.js'
-import Layout from './layout/component.js'
-import SlideShow from './slideshow/component.js'
-import { getPresentations } from './presentations/model.js'
-import { log } from './services/index.js'
-
-const makeRoutes = mdl => {
-  let model = Stream(mdl)
-  return {
-    '/presentations': {
-      view: () => m(Layout, model(), m(Presentations, model())),
-    },
-    '/presentation/:id/slides': {
-      view: () => m(Layout, model(), m(Slides, model())),
-    },
-    '/edit/:pid/slide/:id': {
-      view: () => m(Layout, model(), m(Editor, model())),
-    },
-    '/slideshow/:id': {
-      view: () => m(Layout, model(), m(SlideShow, model())),
-    },
-  }
-}
+const routes = {
+  "/drone": {
+    view: () => m(Layout, m(Drone)),
+  },
+};
 
 export const App = ({ attrs: model }) => {
-  const state = {
-    errors: '',
-  }
-
-  const onError = error => {
-    log('error')(error)
-    state.error = error
-  }
-
-  const onSuccess = Models => dto => (Models.Presentations = dto)
-
-  const findPresentations = ({ attrs: { Models } }) =>
-    getPresentations().fork(onError, onSuccess(Models))
-
   return {
-    oninit: findPresentations,
     oncreate: ({ dom }) => {
-      const mainStage = dom.querySelector('.main-stage')
-
-      m.route(mainStage, '/presentations', makeRoutes(model))
+      const main = dom.querySelector(".section-main");
+      m.route(main, "/drone", routes);
     },
     view: ({ children }) => {
-      return m('.App', [m('.main-stage', children)])
+      return m(".App", [m(".section-main", children)]);
     },
-  }
-}
+  };
+};
 
-export default App
+export default App;

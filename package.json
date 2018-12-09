@@ -22,20 +22,19 @@
   "dependencies": {
     "animejs": "^2.2.0",
     "bulma": "^0.7.2",
+    "chart.js": "^2.7.3",
     "data.maybe": "^1.2.3",
     "data.task": "^3.1.2",
-    "feather-icons": "^4.9.0",
-    "json-graphql-server": "^2.1.2",
-    "json-server-extension": "^1.1.2",
-    "marked": "^0.5.1",
     "mithril": "^2.0.0-rc.1",
     "mithril-stream": "^1.1.0",
+    "moment": "^2.22.2",
+    "plotly.js-dist": "^1.42.5",
     "ramda": "^0.25.0",
-    "sortablejs": "^1.7.0",
-    "stacktrace-js": "^2.0.0"
+    "wrld.js": "^0.1.1960"
   },
   "scripts": {
-    "start": "yarn deployPrisma & yarn web",
+    "dev": "yarn deployPrisma & yarn web",
+    "start": "yarn web",
     "deployPrisma": "cd mithril-presenter; docker-compose; prisma local start",
     "jsonQl": "json-graphql-server db.js",
     "web": "webpack-dev-server --open",
