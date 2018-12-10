@@ -24,6 +24,10 @@ const Drone = () => {
       m(".container box", [
         m("h1.title", "Temp for last 30 mins"),
         m(Chart(Models)),
+        m(
+          "pre.pre",
+          `Last Data Point: ${JSON.stringify(Models.Chrono[0], null, 2)}`
+        ),
       ]),
   };
 };

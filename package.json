@@ -1,5 +1,5 @@
 {
-  "name": "conference-tracker",
+  "name": "drone-app",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -33,10 +33,7 @@
     "wrld.js": "^0.1.1960"
   },
   "scripts": {
-    "dev": "yarn deployPrisma & yarn web",
     "start": "yarn web",
-    "deployPrisma": "cd mithril-presenter; docker-compose; prisma local start",
-    "jsonQl": "json-graphql-server db.js",
     "web": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js"
   }
