@@ -7,8 +7,8 @@ export const toMapDto = (acc, { timestamp, metric, latitude, longitude }) => {
   return acc;
 };
 
-const ToC = f => (f - 32) * 5 / 9;
-const ToF = c => c * (9 / 5) + 32;
+export const toCels = f => (f - 32) * 5 / 9;
+export const toFaren = c => c * (9 / 5) + 32;
 
 const changeTemp = () => {
   switch (state.status) {

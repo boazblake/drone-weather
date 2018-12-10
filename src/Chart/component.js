@@ -1,6 +1,7 @@
 import m from "mithril";
 import M from "moment";
 import LineChart from "./line-chart.js";
+import { animateFadeIn } from "../services/animations.js";
 
 const toDto = (acc, { timestamp, metric }) => {
   let time = M(timestamp)
@@ -18,24 +19,29 @@ const toDto = (acc, { timestamp, metric }) => {
   return acc;
 };
 
-const Chart = mdl => {
+const Chart = (mdl, updateTemp, temp) => {
   const state = {
-    status: "F",
     options: {
       margin: { t: 0 },
+      line: {
+        shape: "spline",
+        smoothing: 1.3,
+        color: temp == "F" ? "e67e22" : "27ae60",
+        simplify: false,
+      },
     },
   };
 
   state.plotly = mdl.Chrono.reduce(toDto, {
     x: [],
     y: [],
-    line: { shape: "spline", smoothing: 1.3 },
-    mode: "lines+markers",
   });
 
   return {
+    oncreate: animateFadeIn,
     view: () => [
-      m("h2.subtitle", { color: "white" }, "Temp F°"),
+      m("h2.subtitle", { color: "white" }, `Temp ${temp}°`),
+      m("button.button", { onclick: updateTemp }, "Change Temp"),
       m(LineChart(state)),
     ],
   };
