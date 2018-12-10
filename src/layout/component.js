@@ -4,7 +4,7 @@ import Models from "../Models.js";
 
 const Layout = {
   view: ({ children }) => {
-    return [children];
+    return [m(".title"), "EOG RESOURCES DRONE APP", children];
   },
 };
 

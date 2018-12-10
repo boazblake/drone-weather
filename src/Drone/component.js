@@ -2,24 +2,29 @@ import m from "mithril";
 import { log } from "../services/index.js";
 import Models from "../Models.js";
 import Chart from "../Chart/component.js";
+import Task from "data.task";
 
 const Drone = () => {
-  const getData = () => Models.getDroneData.fork(onError, onSuccess);
+  const updateChrono = ({ data }) =>
+    Task.of((Models.Chrono = data.sort((x, y) => x.timestamp > y.timestamp)));
+
+  const getData = () =>
+    Models.getDroneData.chain(updateChrono).fork(onError, onSuccess);
 
   const onError = error => {
     log("error")(error);
     Models.Errors.push(error);
   };
 
-  const onSuccess = ({ data }) => {
-    Models.Chrono = data.sort((x, y) => x.timestamp > y.timestamp);
-    setTimeout(() => getData(), 4000);
-  };
+  const onSuccess = data => setTimeout(() => getData(), 4000);
 
   return {
     oninit: getData,
     view: () =>
-      m(".container", [m("h1.title", "Boaz Drone App"), m(Chart(Models))]),
+      m(".container box", [
+        m("h1.title", "Temp for last 30 mins"),
+        m(Chart(Models)),
+      ]),
   };
 };
 

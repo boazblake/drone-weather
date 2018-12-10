@@ -1,9 +1,15 @@
-import { droneDataTask } from "./services/requests.js";
+import {
+  droneDataTask,
+  droneWeatherByLLTask,
+  droneWeatherByWoeidTask,
+} from "./services/requests.js";
 
 const Models = {
   getDroneData: droneDataTask(),
-  MapData: [],
-  TimeStamps: [],
+  getWeatherByLL: (lat, long) => droneWeatherByLLTask(lat, long),
+  getWeatherByWoeid: woeid => droneWeatherByWoeidTask(woeid),
+  Weather: [],
+  Woeid: [],
   Chrono: [],
   Drone: {},
   Errors: [],

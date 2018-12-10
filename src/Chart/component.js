@@ -1,7 +1,6 @@
 import m from "mithril";
 import M from "moment";
-import PlotlyChart from "./plotly-line-chart.js";
-import Charty from "./chartist-line-chart.js";
+import LineChart from "./line-chart.js";
 
 const toDto = (acc, { timestamp, metric }) => {
   let time = M(timestamp)
@@ -27,27 +26,17 @@ const Chart = mdl => {
     },
   };
 
-  state.plotly = mdl.Chrono.reduce(toDto, { x: [], y: [] });
-  state.charty = mdl.Chrono.reduce(toDto, {
-    type: "line",
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: "Houston Temp",
-          data: [],
-          borderWidth: 1,
-        },
-      ],
-      options: { scales: { yAxis: [{ ticks: { baginAtZero: true } }] } },
-    },
+  state.plotly = mdl.Chrono.reduce(toDto, {
+    x: [],
+    y: [],
+    line: { shape: "spline", smoothing: 1.3 },
+    mode: "lines+markers",
   });
 
   return {
     view: () => [
-      m("h2.title", "Temp"),
-      m(PlotlyChart(state)),
-      m(Charty, state),
+      m("h2.subtitle", { color: "white" }, "Temp F°"),
+      m(LineChart(state)),
     ],
   };
 };

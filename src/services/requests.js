@@ -9,10 +9,14 @@ const getTask = url =>
       .request({
         method: "GET",
         url: `${baseUrl}/${url}`,
-        withCredentials: false,
+        withCredentials: true,
         headers: { "Content-Type": "application/json" },
       })
       .then(res, rej)
   );
 
 export const droneDataTask = () => getTask("drone");
+export const droneWeatherByLLTask = (latt, long) =>
+  getTask(`weather/location/search/?lattlong=${latt}${long}`);
+export const droneWeatherByWoeidTask = woeid =>
+  getTask(`weather/location/${woeid}`);
