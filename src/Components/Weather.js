@@ -8,7 +8,7 @@ const Weather = ({ attrs: Models }) => {
     console.log("updatesttae", (state.now = v.attrs.Models.Weather.now));
 
   return {
-    oninit: updateState,
+    // oninit: updateState,
     view: ({ attrs: Models }) =>
       m("pre.pre column", JSON.stringify(state.now, null, 2)),
   };

@@ -16,12 +16,26 @@ const Graph = ({ attrs: { Models } }) => {
   };
 
   const plotData = ({ dom, attrs: { Models } }) =>
-    Plotly.react(dom, [Models.TempChart], state.options);
+    (Models.Plot = Plotly.react(dom, [Models.ChartModel], state.options));
+
+  const updatePlot = ({ dom, attrs: { Models } }) => {
+    console.log(Models.Plot);
+    return (Models.Plot = Plotly.react(
+      dom,
+      [Models.ChartModel],
+      state.options
+    ));
+  };
 
   return {
     oncreate: plotData,
-    onupdate: plotData,
-    view: ({ attrs: { Models } }) => m(".", { style: { height: "450px" } }),
+    onupdate: updatePlot,
+    view: ({ attrs: { Models } }) => {
+      console.log(Models.Plot);
+      return Models.Plot
+        ? m(".", { style: { height: "450px" } }, Models.Plot)
+        : m();
+    },
   };
 };
 

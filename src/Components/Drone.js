@@ -17,7 +17,7 @@ const Drone = ({ attrs: { mdl: { Models } } }) => {
 
   const onSuccess = _ => {
     state.status = "loaded";
-    console.log("drone loaded", Models);
+    // console.log("drone loaded", Models);
     setTimeout(() => getData(), 4000);
   };
 
@@ -30,7 +30,7 @@ const Drone = ({ attrs: { mdl: { Models } } }) => {
       state.status == "loaded"
         ? m(".container box", [
             m("h1.title", "Temp for last 30 mins"),
-            m(Chart, Models),
+            m(Chart, { Models }),
             m(".level", [
               m(".level-left", [
                 m(

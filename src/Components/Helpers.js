@@ -24,15 +24,17 @@ export const toChartDto = (acc, { timestamp, metric }) => {
   return acc;
 };
 
-const toViewModel = mdls => ({ sun_rise, sun_set, consolidated_weather }) =>
-  Task.of(
-    (mdls.Weather = {
-      sun_rise,
-      sun_set,
-      Week: consolidated_weather,
-      now: consolidated_weather[0],
-    })
-  );
+const toViewModel = mdls => ({ sun_rise, sun_set, consolidated_weather }) => {
+  mdls.Weather = {
+    sun_rise,
+    sun_set,
+    Week: consolidated_weather,
+    now: consolidated_weather[0],
+  };
+
+  mdls.Chrono.reduce(toChartDto, mdls.ChartModel);
+  return Task.of(mdls);
+};
 
 const filterForHTown = data => {
   let res = data.filter(propEq("title", "Houston"));
