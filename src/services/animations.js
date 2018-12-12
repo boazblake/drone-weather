@@ -1,85 +1,87 @@
-import anime from 'animejs'
+import anime from "animejs";
 
 export const animateEntrance = ({ dom }) => {
-  let children = [...dom.children]
+  let children = [...dom.children];
 
   return children.map((child, index) => {
     setTimeout(() => {
       child.animate(
         [
-          { transform: 'translate3d(0,-100%,0)', opacity: 0 },
-          { transform: 'none', opacity: 1 },
+          { transform: "translate3d(0,-100%,0)", opacity: 0 },
+          { transform: "none", opacity: 1 },
         ],
         {
           duration: 850,
         }
-      )
-    }, (index + 1) * 200)
-  })
-}
+      );
+    }, (index + 1) * 200);
+  });
+};
 
 export const animateExit = dom => {
-  let children = [...dom.children]
+  let children = [...dom.children];
 
   let anim = animate([
-    { transform: 'none', opacity: 1 },
-    { transform: 'translate3d(25%,100%,0)', opacity: 0 },
-  ])
+    { transform: "none", opacity: 1 },
+    { transform: "translate3d(25%,100%,0)", opacity: 0 },
+  ]);
 
   let waapi = children.map(child =>
     child.animate(anim, {
       duration: 850,
     })
-  )
+  );
 
   return new Promise(resolve => {
     waapi.onfinish = function(e) {
-      resolve()
-    }
-  })
-}
+      resolve();
+    };
+  });
+};
 
 export const animateFadeIn = ({ dom }) => {
-  let children = [...dom.children]
-  children.map((child, index) => {
-    child.style.opacity = 0
-    child.style.transition = 'opacity .4s ease-in-out'
+  if (dom) {
+    let children = [...dom.children];
+    children.map((child, index) => {
+      child.style.opacity = 0;
+      child.style.transition = "opacity .4s ease-in-out";
 
-    return setTimeout(() => {
-      child.style.opacity = 1
-    }, (index + 1) * 200)
-  })
-}
+      return setTimeout(() => {
+        child.style.opacity = 1;
+      }, (index + 1) * 200);
+    });
+  }
+};
 
 export const animateFadeOut = ({ dom }) => {
   let anim = [
-    { transition: 'opacity .4s ease-in-out' },
-    { transform: 'none', opacity: 1 },
-    { transform: 'translate3d(25%,100%,0)', opacity: 0 },
-  ]
+    { transition: "opacity .4s ease-in-out" },
+    { transform: "none", opacity: 1 },
+    { transform: "translate3d(25%,100%,0)", opacity: 0 },
+  ];
   let waapi = dom.animate(anim, {
     duration: 850,
-  })
+  });
 
   return new Promise(resolve => {
     waapi.onfinish = function(e) {
-      resolve()
-    }
-  })
-}
+      resolve();
+    };
+  });
+};
 
 export const animeEntrance = ({ dom }) => {
-  let children = [...dom.children]
-  console.log(children)
+  let children = [...dom.children];
+  console.log(children);
   const res = children.map(el =>
     anime({
       target: el,
-      easing: 'easeInQuad',
+      easing: "easeInQuad",
       translateX: 250,
       offset: 0,
     })
-  )
+  );
 
-  console.log('anim', res)
-  return res
-}
+  console.log("anim", res);
+  return res;
+};

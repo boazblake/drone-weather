@@ -17,6 +17,6 @@ const getTask = url =>
 
 export const droneDataTask = () => getTask("drone");
 export const droneWeatherByLLTask = (latt, long) =>
-  getTask(`weather/location/search/?lattlong=${latt}${long}`);
+  getTask(`weather/location/search/?lattlong=${latt},${long}`);
 export const droneWeatherByWoeidTask = woeid =>
   getTask(`weather/location/${woeid}`);
