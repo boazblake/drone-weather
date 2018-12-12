@@ -5,7 +5,7 @@ import Weather from "./Weather.js";
 import { getDroneData } from "./Helpers.js";
 import { animateFadeIn } from "../services/animations.js";
 
-const Drone = ({ attrs: { mdl: { Models } } }) => {
+const Drone = ({ attrs: { Models } }) => {
   const state = {
     status: "loading",
   };
@@ -17,7 +17,6 @@ const Drone = ({ attrs: { mdl: { Models } } }) => {
 
   const onSuccess = _ => {
     state.status = "loaded";
-    console.log("drone loaded", Models);
     setTimeout(() => getData(), 4000);
   };
 
@@ -26,11 +25,11 @@ const Drone = ({ attrs: { mdl: { Models } } }) => {
   return {
     oninit: getData(),
     oncreate: animateFadeIn,
-    view: ({ attrs: { mdl: { Models } } }) =>
+    view: ({ attrs: { Models } }) =>
       state.status == "loaded"
         ? m(".container box", [
             m("h1.title", "Temp for last 30 mins"),
-            m(Chart, Models),
+            m(Chart, { Models }),
             m(".level", [
               m(".level-left", [
                 m(

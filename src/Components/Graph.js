@@ -1,27 +1,36 @@
 import m from "mithril";
-import Plotly from "plotly.js-dist";
+import Chart from "chart.js";
 import { log } from "../services/index.js";
+import Stock from "paths-js/stock";
 
-const Graph = ({ attrs: { Models } }) => {
-  const state = {
-    options: {
-      margin: { t: 0 },
-      line: {
-        shape: "spline",
-        smoothing: 1.3,
-        color: Models.ChartState.temp.selected == "F" ? "e67e22" : "27ae60",
-        simplify: false,
+const Graph = v => {
+  const state = {};
+  const createPlot = ({ dom }) => {
+    state.chart = Stock({
+      xaccessor: dto => {
+        console.log("dto", dto);
+        return dto.timestamp;
       },
-    },
+      yaccessor: dto => dto.metric,
+      data: [v.attrs.Models.ChartDataModel],
+    });
+    console.log(state.chart);
   };
 
-  const plotData = ({ dom, attrs: { Models } }) =>
-    Plotly.react(dom, [Models.TempChart], state.options);
-
   return {
-    oncreate: plotData,
-    onupdate: plotData,
-    view: ({ attrs: { Models } }) => m(".", { style: { height: "450px" } }),
+    oncreate: createPlot,
+    view: v =>
+      state.chart
+        ? m("", { style: { height: "450px" } }, [
+            state.chart.curves.map((d, i) =>
+              m("path", {
+                d: d.line.path.print(),
+                stroke: d.color,
+                fill: "none",
+              })
+            ),
+          ])
+        : m("", "stil loading ..."),
   };
 };
 

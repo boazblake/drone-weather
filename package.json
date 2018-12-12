@@ -28,6 +28,7 @@
     "mithril": "^2.0.0-rc.1",
     "mithril-stream": "^1.1.0",
     "moment": "^2.22.2",
+    "paths-js": "^0.4.7",
     "plotly.js-dist": "^1.42.5",
     "ramda": "^0.25.0",
     "wrld.js": "^0.1.1960"

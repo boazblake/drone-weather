@@ -13,14 +13,7 @@ export const toChartDto = (acc, { timestamp, metric }) => {
     .utc()
     .fromNow();
 
-  if (acc.x && acc.y) {
-    acc.x.push(time);
-    acc.y.push(metric);
-    return acc;
-  }
-  acc.data.labels.push(time);
-  acc.data.datasets[0].data.push(metric);
-
+  acc.push({ timestamp, metric });
   return acc;
 };
 
@@ -30,7 +23,7 @@ const toViewModel = mdls => ({ sun_rise, sun_set, consolidated_weather }) =>
       sun_rise,
       sun_set,
       Week: consolidated_weather,
-      now: consolidated_weather[0],
+      today: consolidated_weather[0],
     })
   );
 

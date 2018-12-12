@@ -9,12 +9,7 @@ const Weather = {
   sun_rise: "",
   sun_set: "",
   week: [],
-  now: {},
-};
-
-const ChartModel = {
-  x: [],
-  y: [],
+  today: {},
 };
 
 const ChartState = {
@@ -26,9 +21,9 @@ const Models = {
   getWeatherByLL: (lat, long) => droneWeatherByLLTask(lat, long),
   getWeatherByWoeid: woeid => droneWeatherByWoeidTask(woeid),
   Weather,
-  ChartModel,
+  ChartModel: {},
+  ChartDataModel: [],
   ChartState,
-  TempChart: {},
   Chrono: [],
   Drone: {},
   Errors: [],

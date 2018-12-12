@@ -6,12 +6,13 @@ import Graph from "./Graph.js";
 import Plotly from "plotly.js-dist";
 
 const Chart = ({ attrs: { Models } }) => {
-  Models.TempChart = Models.Chrono.reduce(toChartDto, Models.ChartModel);
+  Models.Chrono.reduce(toChartDto, Models.ChartDataModel);
+
+  console.log(Models.ChartDataModel);
 
   return {
     oncreate: animateFadeIn,
     view: ({ attrs: { Models } }) => {
-      console.log("chart view", Models.Weather.now);
       return [
         m(
           "h2.subtitle",
@@ -23,7 +24,7 @@ const Chart = ({ attrs: { Models } }) => {
           { onclick: () => convertTemp(Models.ChartState.temp) },
           "Change Temp"
         ),
-        m(Graph, Models),
+        m(Graph, { Models }),
       ];
     },
   };
